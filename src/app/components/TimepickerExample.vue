@@ -1,39 +1,27 @@
 <template>
     <div>
-        <Timepicker :value.sync="date" :hour-step="1" :minute-step="5" :show-seconds="false" :second-step="5">
-        </Timepicker>
+        <Timepicker :value.sync="date" :hour-step="1" :minute-step="5" :show-seconds="true" :second-step="5" @changed="timeChanged"> </Timepicker>
     </div>
 </template>
-
 
 <script>
 import Timepicker from '@/components/Timepicker';
 
-
 export default {
-    name:'TimepickerExample',
+    name: 'TimepickerExample',
     components: {
         Timepicker
     },
     data() {
         return {
-            date:new Date(),
-        }; 
+            date: new Date(),
+            newDate: null
+        };
     },
-};
-</script>
-
-<style lang="scss">
-.timepicker-wrapper{
-    table{
-        tbody{
-            tr{
-                border:none;
-                td{
-                    border: none
-                }
-            }
+    methods: {
+        timeChanged(data) {
+            this.newDate = data;
         }
     }
-}
-</style>
+};
+</script>
