@@ -1,19 +1,19 @@
 <template>
     <div class="e9-chart">
         <component :is="component" :options="options" :width="width" :height="height" :data="data" v-if="!showTable"></component>
-        <div class="table-graph" v-if="showTable">
+        <div class="chart-table-graph" v-if="showTable">
             <div class="graph-wrapper" :class="type.toLowerCase()">
                 <component :is="component" :options="options" :width="width" :height="height" :data="data"></component>
             </div>
-            <div class="table-wrapper" :class="type.toLowerCase()" v-if="tableData && tableData.data && tableData.data.length > 0" :style="{'max-height': height}">
-                <div class="table-header">
+            <div class="chart-table-wrapper" :class="type.toLowerCase()" v-if="tableData && tableData.data && tableData.data.length > 0" :style="{'max-height': height}">
+                <div class="chart-table-header">
                     <div v-for="(item, key) in tableData.header" :key="key" class="header" :style="getStyle(tableData.header.length, key)">
                         {{ item }}
                     </div>
                 </div>
-                <div class="table-body">
-                    <div class="table-row" v-for="(item, key1) in tableData.data" :key="key1">
-                        <div class="table-column" v-for="(col, key2) in item" :key="key2" :style="getStyle(tableData.header.length, key2)">{{ col }}</div>
+                <div class="chart-table-body">
+                    <div class="chart-table-row" v-for="(item, key1) in tableData.data" :key="key1">
+                        <div class="chart-table-column" v-for="(col, key2) in item" :key="key2" :style="getStyle(tableData.header.length, key2)">{{ col }}</div>
                         <br style=" clear:both " />
                     </div>
                 </div>
