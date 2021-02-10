@@ -1,18 +1,23 @@
 <template>
     <div>
-        <Timepicker :value.sync="date" :hour-step="1" :minute-step="5" :show-seconds="true" :second-step="5">
-        </Timepicker>
+        <Timepicker :value.sync="date" :hour-step="1" :minute-step="5" :show-seconds="true" :second-step="5" @changed="timeChanged"> </Timepicker>
     </div>
 </template>
 
 <script>
 export default {
-    name:'TimepickerExample',
+    name: 'TimepickerExample',
     data() {
         return {
-            date:new Date(2020,5,1),
-        }; 
+            date: new Date(2020, 5, 1),
+            newDate: null
+        };
     },
+    methods: {
+        timeChanged(data) {
+            this.newDate = data;
+        }
+    }
 };
 </script>
 
@@ -28,10 +33,10 @@ export default {
                     padding: 0;
 
                     a {
-                        color: #0B58D4;
+                        color: #0b58d4;
 
                         &:hover {
-                            color: #0062FF;
+                            color: #0062ff;
                         }
                     }
                 }
