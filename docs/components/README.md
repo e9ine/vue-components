@@ -60,6 +60,10 @@ Use `Avatar Info` to show user profile avatar along with additional information 
 }],
 ```
 
+**Slots**
+
+-   **_avatarActions:_** Use this slot to add custom content to avatar actions panel. This will override the `avatar-actions` array.
+
 <SplitTab>
   <AvatarInfoExample slot="example"/>
   <<< @/docs/.vuepress/components/AvatarInfoExample.vue
@@ -1187,6 +1191,8 @@ pageTitle:{
 **Slots**
 
 Use the default slot to insert custom content into the topbar after the logo & page title.
+
+**_topbarAvatarActions:_** Use this slot to add custom content to avatar actions panel. This will override the `avatar-actions` array within `avatar-options`.
 
 <SplitTab>
   <TopBarExample slot="example"/>

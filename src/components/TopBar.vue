@@ -42,6 +42,9 @@
                     :image-url="avatarOptions.imageUrl"
                 ></Avatar>
             </template>
+            <template v-slot:avatarActions>
+                <slot name="topbarAvatarActions"></slot>
+            </template>
         </AvatarInfo>
     </div>
 </template>

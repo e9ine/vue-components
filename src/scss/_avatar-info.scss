@@ -10,6 +10,7 @@
 
     .info-wrapper {
         margin-left: 0.75rem;
+
         h4 {
             font-size: $avatar-info-title-size;
             margin-bottom: 0;
@@ -32,36 +33,40 @@
         .avatar-actions-toggle {
             display: block;
             color: $grey;
-            margin-left: 0.5rem ;
+            margin-left: 0.5rem;
+            margin-top: 0.125rem;
 
             &:hover {
                 color: $dark-grey;
             }
         }
 
-        .avatar-actions {
-            display: flex;
-            flex-direction: column;
+        .avatar-actions-container {
             position: absolute;
             min-width: 120px;
             right: 0;
             background: $white;
             border-radius: $border-radius;
             box-shadow: $box-shadow;
-            padding: $default-content-padding;
-            white-space: nowrap;
             margin-top: 1rem;
 
-            a {
-                margin-bottom: .5rem;
-                color: $body-text;
-                font-weight: 500;
+            .avatar-actions {
+                padding:1rem;
+                display: flex;
+                flex-direction: column;
+                white-space: nowrap;
+                a {
+                    margin-bottom: .5rem;
+                    color: $body-text;
+                    font-weight: 500;
 
-                &:hover {
-                    color: $brand-primary;
-                }
-                &:last-child{
-                    margin-bottom: 0;
+                    &:hover {
+                        color: $brand-primary;
+                    }
+
+                    &:last-child {
+                        margin-bottom: 0;
+                    }
                 }
             }
         }
