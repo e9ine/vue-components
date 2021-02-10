@@ -765,6 +765,7 @@ The table component is used to display the data in the tabular format with the a
 |responsive| `Attribute` ||| This attribute makes table responsive. |
 |border-spacing| `Number` ||| Value to this adds margin between the rows. |
 |min-width| `Number` |`900px` || Minimum width of the table. |
+|is-expandable| `Boolean` |`false` || If each row within the table is expandable. |
 
 **headings**
 
@@ -821,6 +822,20 @@ You can use the default fall-back scoped slot to format any cells that do not ha
     <div class="logo" :style="{'background-image': 'url(' + getImageUrl(data) + ')'}"></div>
 </template>
 ```
+
+_scoped slots_ can also be used to show expanded area for a row. This is possible only when `is-expanded` prop is set to `true`. The slot exposes the row data & index via slot props.
+
+```vue
+<template v-slot:expanded-area="data">
+    <div class="result">
+        <pre>{{ data.data.row.result }}</pre>
+    </div>
+</template>
+```
+
+**Events**
+
+**_expanded_** event is emitted whenever the expand button is clicked. The row data & index are emitted along with this event.
 
 ### Normal Table (without API)
 

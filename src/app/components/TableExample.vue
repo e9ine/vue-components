@@ -1,17 +1,16 @@
 <template>
     <div>
-        <Table
-            :items="items"
-            :headings="columns"
-            :on-row-click="rowClicked"
-            :pagination.sync="pagination"
-            :sort.sync="sort"
-            table-class="table-bordered"
-            thead-class="thead-light"
-            :options="tableOptions"
-        >
+        <Table :items="items" :headings="columns" :pagination.sync="pagination" table-class="table-bordered" thead-class="thead-light" :is-expandable="true" :options="tableOptions">
             <template v-slot:OS="data">
                 <div class="logo" :style="{'background-image': 'url(' + getImageUrl(data) + ')'}"></div>
+            </template>
+            <template v-slot:Action="data">
+                <p>{{ data }}</p>
+            </template>
+            <template v-slot:expanded-area="data">
+                <div class="result">
+                    <pre>{{ data.data.row.result }}</pre>
+                </div>
             </template>
         </Table>
     </div>
@@ -58,39 +57,65 @@ export default {
             ],
             items: [
                 {
+                    Hostname: 'e9ine-host02',
+                    IPAddress: '192.168.0.2',
+                    Network: 'MBN',
+                    LifeCycleStatus: 'SwitchedOff',
+                    Environment: 'Live',
+                    OS: {Logo: 'https://storage.googleapis.com/oneview-production-bucket/resources/solaris.png'},
+                    result:
+                        '500.0: Module or ISAPI error occurred.\n500.11: Application is shutting down on the web server.\n500.12: Application is busy restarting on the web server.\n500.13: Web server is too busy.\n500.15: Direct requests for global.asax are not allowed.\n500.19: Configuration data is invalid.\n500.21: Module not recognised.'
+                },
+                {
                     Hostname: 'e9ine-host01',
                     IPAddress: '192.168.0.1',
                     Network: 'CDN',
                     LifeCycleStatus: 'Active',
                     Environment: 'Live',
                     Critical: 'ProductionCritical',
-                    OS: {Logo: 'https://storage.googleapis.com/oneview-production-bucket/resources/hpux.png'}
+                    OS: {Logo: 'https://storage.googleapis.com/oneview-production-bucket/resources/hpux.png'},
+                    result:
+                        '500.0: Module or ISAPI error occurred.\n500.11: Application is shutting down on the web server.\n500.12: Application is busy restarting on the web server.\n500.13: Web server is too busy.\n500.15: Direct requests for global.asax are not allowed.\n500.19: Configuration data is invalid.\n500.21: Module not recognised.'
                 },
                 {
-                    Hostname: 'e9ine-host02',
-                    IPAddress: '192.168.0.2',
-                    Network: 'MBN',
-                    LifeCycleStatus: 'SwitchedOff',
-                    Environment: 'Live',
-                    OS: {Logo: 'https://storage.googleapis.com/oneview-production-bucket/resources/solaris.png'}
+                    Hostname: 'e9ine-host03',
+                    IPAddress: '192.168.1.199',
+                    Network: 'CDN',
+                    LifeCycleStatus: 'Active',
+                    Environment: 'prod',
+                    OS: {},
+                    result:
+                        '500.0: Module or ISAPI error occurred.\n500.11: Application is shutting down on the web server.\n500.12: Application is busy restarting on the web server.\n500.13: Web server is too busy.\n500.15: Direct requests for global.asax are not allowed.\n500.19: Configuration data is invalid.\n500.21: Module not recognised.'
                 },
-                {Hostname: 'e9ine-host03', IPAddress: '192.168.1.199', Network: 'CDN', LifeCycleStatus: 'Active', Environment: 'prod', OS: {}},
                 {
                     Hostname: 'e9ine-host04',
                     IPAddress: '192.168.28.151',
                     Network: 'CDN',
                     LifeCycleStatus: 'Active',
                     Environment: 'dr',
-                    OS: {Logo: 'https://storage.googleapis.com/oneview-production-bucket/resources/hpux.png'}
+                    OS: {Logo: 'https://storage.googleapis.com/oneview-production-bucket/resources/hpux.png'},
+                    result:
+                        '500.0: Module or ISAPI error occurred.\n500.11: Application is shutting down on the web server.\n500.12: Application is busy restarting on the web server.\n500.13: Web server is too busy.\n500.15: Direct requests for global.asax are not allowed.\n500.19: Configuration data is invalid.\n500.21: Module not recognised.'
                 },
-                {Hostname: 'e9ine-host05', IPAddress: '192.168.2.0', Network: 'CDN', LifeCycleStatus: 'Active', Environment: 'prod', OS: {}},
+                {
+                    Hostname: 'e9ine-host05',
+                    IPAddress: '192.168.2.0',
+                    Network: 'CDN',
+                    LifeCycleStatus: 'Active',
+                    Environment: 'prod',
+                    OS: {},
+                    result:
+                        '500.0: Module or ISAPI error occurred.\n500.11: Application is shutting down on the web server.\n500.12: Application is busy restarting on the web server.\n500.13: Web server is too busy.\n500.15: Direct requests for global.asax are not allowed.\n500.19: Configuration data is invalid.\n500.21: Module not recognised.'
+                },
                 {
                     Hostname: 'e9ine-host06',
                     IPAddress: '192.168.2.22',
                     Network: 'CDN',
                     LifeCycleStatus: 'Active',
                     Environment: 'dr',
-                    OS: {Logo: 'https://storage.googleapis.com/oneview-production-bucket/resources/hpux.png'}
+                    OS: {Logo: 'https://storage.googleapis.com/oneview-production-bucket/resources/hpux.png'},
+                    result:
+                        '500.0: Module or ISAPI error occurred.\n500.11: Application is shutting down on the web server.\n500.12: Application is busy restarting on the web server.\n500.13: Web server is too busy.\n500.15: Direct requests for global.asax are not allowed.\n500.19: Configuration data is invalid.\n500.21: Module not recognised.'
                 },
                 {
                     Hostname: 'e9ine-host07',
@@ -98,7 +123,9 @@ export default {
                     Network: 'CDN',
                     LifeCycleStatus: 'Active',
                     Environment: 'dr',
-                    OS: {Logo: 'https://storage.googleapis.com/oneview-production-bucket/resources/ibm.png'}
+                    OS: {Logo: 'https://storage.googleapis.com/oneview-production-bucket/resources/ibm.png'},
+                    result:
+                        '500.0: Module or ISAPI error occurred.\n500.11: Application is shutting down on the web server.\n500.12: Application is busy restarting on the web server.\n500.13: Web server is too busy.\n500.15: Direct requests for global.asax are not allowed.\n500.19: Configuration data is invalid.\n500.21: Module not recognised.'
                 },
                 {
                     Hostname: 'e9ine-host08',
@@ -106,7 +133,9 @@ export default {
                     Network: 'CDN',
                     LifeCycleStatus: 'Active',
                     Environment: 'Live',
-                    OS: {Logo: 'https://storage.googleapis.com/oneview-production-bucket/resources/np_window-data-base_705788_2E4066.png'}
+                    OS: {Logo: 'https://storage.googleapis.com/oneview-production-bucket/resources/np_window-data-base_705788_2E4066.png'},
+                    result:
+                        '500.0: Module or ISAPI error occurred.\n500.11: Application is shutting down on the web server.\n500.12: Application is busy restarting on the web server.\n500.13: Web server is too busy.\n500.15: Direct requests for global.asax are not allowed.\n500.19: Configuration data is invalid.\n500.21: Module not recognised.'
                 },
                 {
                     Hostname: 'e9ine-host09',
@@ -114,7 +143,9 @@ export default {
                     Network: 'SDN',
                     LifeCycleStatus: 'SwitchedOff',
                     Environment: 'Live',
-                    OS: {Logo: 'https://storage.googleapis.com/oneview-production-bucket/resources/redhat.png'}
+                    OS: {Logo: 'https://storage.googleapis.com/oneview-production-bucket/resources/redhat.png'},
+                    result:
+                        '500.0: Module or ISAPI error occurred.\n500.11: Application is shutting down on the web server.\n500.12: Application is busy restarting on the web server.\n500.13: Web server is too busy.\n500.15: Direct requests for global.asax are not allowed.\n500.19: Configuration data is invalid.\n500.21: Module not recognised.'
                 },
                 {
                     Hostname: 'e9ine-host10',
@@ -122,12 +153,13 @@ export default {
                     Network: 'CDN',
                     LifeCycleStatus: 'Active',
                     Environment: 'Live',
-                    OS: {Logo: 'https://storage.googleapis.com/oneview-production-bucket/resources/hpux.png'}
+                    OS: {Logo: 'https://storage.googleapis.com/oneview-production-bucket/resources/hpux.png'},
+                    result:
+                        '500.0: Module or ISAPI error occurred.\n500.11: Application is shutting down on the web server.\n500.12: Application is busy restarting on the web server.\n500.13: Web server is too busy.\n500.15: Direct requests for global.asax are not allowed.\n500.19: Configuration data is invalid.\n500.21: Module not recognised.'
                 }
             ],
-            isPagination: false,
             pagination: {
-                perPage: 4,
+                perPage: 7,
                 totalItems: 0,
                 currentPage: 1,
                 threshold: 2,
@@ -169,7 +201,7 @@ export default {
     background-color: white;
 }
 </style>
-<style lang="scss">
+<style lang="scss" scoped>
 table {
     display: table;
     margin: 0;
@@ -195,6 +227,14 @@ table {
     }
     &.HardwareSupport {
         background-color: #fdcbae;
+    }
+    .result {
+        padding: 0 0.5rem;
+        pre {
+            background: $light;
+            padding: 1rem;
+            border-radius: $border-radius;
+        }
     }
 }
 </style>

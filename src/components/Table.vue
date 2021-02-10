@@ -35,22 +35,35 @@
                                 </span>
                             </div>
                         </th>
+                        <th v-if="isExpandable"></th>
                     </tr>
                     <tr class="linear-activity" v-show="isLoading">
-                        <td class="indeterminate" :colspan="clonedHeadings.length"></td>
+                        <td class="indeterminate" :colspan="isExpandable ? clonedHeadings.length + 1 : clonedHeadings.length"></td>
                     </tr>
                 </thead>
                 <tbody v-if="clonedItems.length">
-                    <tr v-for="(row, key) in clonedItems" :key="key" @click="actionWrapper(row)" :class="tbodyTrClass">
-                        <td v-for="(header, hKey) in clonedHeadings" :key="hKey" :class="setTdClasses(header, row)">
-                            <span v-if="$scopedSlots[header.key]">
-                                <slot :name="header.key" :value="row"></slot>
-                            </span>
-                            <span v-else>
-                                {{ header.formatter ? header.formatter(row[header.key]) : row[header.key] }}
-                            </span>
-                        </td>
-                    </tr>
+                    <template v-for="(row, key) in clonedItems">
+                        <tr :key="key" @click="actionWrapper(row)" :class="tbodyTrClass">
+                            <td v-for="(header, hKey) in clonedHeadings" :key="hKey" :class="setTdClasses(header, row)">
+                                <span v-if="$scopedSlots[header.key]">
+                                    <slot :name="header.key" :value="row"></slot>
+                                </span>
+                                <span v-else>
+                                    {{ header.formatter ? header.formatter(row[header.key]) : row[header.key] }}
+                                </span>
+                            </td>
+                            <td v-if="isExpandable" class="text-right" :class="setTdClasses('', row)">
+                                <div class="row-expand-btn">
+                                    <span @click="expand(row, key)" :class="[row.$expanded ? 'expanded' : '']" class="material-icons">expand_more</span>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr :key="key + '-expanded'" v-if="row.$expanded">
+                            <td :colspan="clonedHeadings.length + 1">
+                                <slot name="expanded-area" :data="{row, key}"> </slot>
+                            </td>
+                        </tr>
+                    </template>
                     <tr v-if="isLoading" class="overlay"></tr>
                 </tbody>
                 <div v-else-if="$slots.empty" v-show="!isLoading">
@@ -150,6 +163,9 @@ export default {
             type: Number,
             default: 900
         },
+        isExpandable: {
+            type: Boolean
+        },
         options: {
             type: Object
         }
@@ -217,7 +233,12 @@ export default {
             if (this.isAPI) {
                 this.callAPI();
             } else {
-                this.sortedItems = this.items.sort((a, b) => {
+                let items = [
+                    ...this.items.map((item) => {
+                        return {...item};
+                    })
+                ];
+                this.sortedItems = items.sort((a, b) => {
                     if (type === 'asc') {
                         return a[key] > b[key] ? 1 : -1;
                     } else if (type === 'desc') return b[key] > a[key] ? 1 : -1;
@@ -249,13 +270,6 @@ export default {
             });
             let encodedUri = encodeURI(csvContent);
             window.open(encodedUri);
-        },
-        setItems() {
-            if (this.pagination) {
-                this.clonedItems = this.items.slice((this.pagination.currentPage - 1) * this.pagination.perPage, this.pagination.perPage);
-            } else {
-                this.clonedItems = this.items;
-            }
         },
         processObject(obj) {
             let str = '';
@@ -300,6 +314,10 @@ export default {
                 err = 'items must be a function when using it with the pagination or pagination object must be present when items is a function';
             }
             return err;
+        },
+        expand(row, key) {
+            this.$set(row, '$expanded', !row.$expanded);
+            this.$emit('expanded', {row, key});
         }
     },
     computed: {
@@ -332,7 +350,7 @@ export default {
             handler(newValue) {
                 if (!this.isAPI) {
                     this.sortedItems = newValue;
-                    this.changePage(1);
+                    if (this.pagination) this.changePage(1);
                 }
             },
             deep: true
@@ -351,15 +369,22 @@ export default {
         }
         if (Array.isArray(this.items)) {
             this.isAPI = false;
-            this.pagination.totalItems = this.items.length;
+            if (this.pagination) this.pagination.totalItems = this.items.length;
         }
-
         if (this.sort && this.sort.name) {
             this.changeSort(this.sort.name, this.sort.value);
         } else {
             if (!this.isAPI) {
-                this.sortedItems = this.items;
-                this.setItems();
+                this.sortedItems = [
+                    ...this.items.map((item) => {
+                        return {...item};
+                    })
+                ];
+                if (this.pagination) {
+                    this.clonedItems = this.sortedItems.slice((this.pagination.currentPage - 1) * this.pagination.perPage, this.pagination.perPage);
+                } else {
+                    this.clonedItems = this.sortedItems;
+                }
             } else {
                 this.callAPI();
             }
