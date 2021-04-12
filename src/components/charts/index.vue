@@ -1,9 +1,9 @@
 <template>
     <div class="e9-chart">
-        <component :is="component" :options="options" :width="width" :height="height" :data="data" v-if="!showTable"></component>
+        <component :is="component" :options="mutableOptions" :width="width" :height="height" :data="data" v-if="!showTable"></component>
         <div class="chart-table-graph" v-if="showTable">
             <div class="graph-wrapper" :class="type.toLowerCase()">
-                <component :is="component" :options="options" :width="width" :height="height" :data="data"></component>
+                <component :is="component" :options="mutableOptions" :width="width" :height="height" :data="data"></component>
             </div>
             <div class="chart-table-wrapper" :class="type.toLowerCase()" v-if="tableData && tableData.data && tableData.data.length > 0" :style="{'max-height': height}">
                 <div class="chart-table-header">
@@ -12,7 +12,7 @@
                     </div>
                 </div>
                 <div class="chart-table-body">
-                    <div class="chart-table-row" v-for="(item, key1) in tableData.data" :key="key1">
+                    <div class="chart-table-row" v-for="(item, key1) in tableData.data" :key="key1" @click="allowClick && itemSelected(item, key1)" :style="getRowStyle()">
                         <div class="chart-table-column" v-for="(col, key2) in item" :key="key2" :style="getStyle(tableData.header.length, key2)">{{ col }}</div>
                         <br style=" clear:both " />
                     </div>
@@ -67,16 +67,29 @@ export default {
                 return ['#1D3461', '#0069AA', '#376996', '#6290C8', '#829CBC'];
             }
         },
+        allowClick: {
+            type: Boolean,
+            default: false
+        },
         options: {
             type: Object
         }
     },
     data() {
         return {
-            component: null
+            component: null,
+            mutableOptions: {}
         };
     },
     methods: {
+        itemSelected(row, key) {
+            let filter = this.tableData.data[key];
+            let _id = this.data.keys ? this.data.keys[key] : null;
+            this.$emit('chartItemClicked', {id: _id, title: filter.Title});
+        },
+        getRowStyle() {
+            return this.allowClick ? [{cursor: 'pointer'}] : [{cursor: 'auto'}];
+        },
         getStyle(size, key) {
             if (size <= 2) {
                 if (key == 0 || key == 'Title') return [{width: '70%', 'text-align': 'left'}];
@@ -92,16 +105,16 @@ export default {
             if (!chartOptions.chart.fontFamily) {
                 chartOptions.chart.fontFamily = 'Arial';
             }
-            if (this.options) {
-                for (const p in this.options) {
+            if (this.mutableOptions) {
+                for (const p in this.mutableOptions) {
                     if (!chartOptions[p]) chartOptions[p] = {};
-                    if (typeof this.options[p] == 'object') {
-                        for (const innerP in this.options[p]) {
+                    if (typeof this.mutableOptions[p] == 'object') {
+                        for (const innerP in this.mutableOptions[p]) {
                             if (!chartOptions[p][innerP]) chartOptions[p][innerP] = {};
-                            chartOptions[p][innerP] = this.options[p][innerP];
+                            chartOptions[p][innerP] = this.mutableOptions[p][innerP];
                         }
                     } else {
-                        chartOptions[p] = this.options[p];
+                        chartOptions[p] = this.mutableOptions[p];
                     }
                 }
             }
@@ -147,6 +160,29 @@ export default {
                 tableData.data.push(_data);
             }
             return tableData;
+        }
+    },
+    mounted() {
+        this.mutableOptions = Vue.util.extend({}, this.options);
+        if (!this.mutableOptions.chart) {
+            this.mutableOptions.chart = {};
+        }
+
+        if (!this.mutableOptions.chart.events) {
+            this.mutableOptions.chart.events = {};
+        }
+        if (this.allowClick) {
+            this.mutableOptions.chart.events = {
+                dataPointSelection: (event, chartContext, config) => {
+                    let filter = this.tableData.data[config.dataPointIndex];
+                    let _id = this.data.keys ? this.data.keys[config.dataPointIndex] : null;
+                    this.$emit('chartItemClicked', {id: _id, title: filter.Title});
+                }
+            };
+        } else {
+            this.mutableOptions.chart.events = {
+                dataPointSelection: null
+            };
         }
     },
     created() {
