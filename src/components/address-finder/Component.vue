@@ -31,8 +31,8 @@
     </div>
 </template>
 <script>
-require('../../directives/v-debounce');
-require('../../directives/v-click-outside');
+import('../../directives/v-debounce');
+import('../../directives/v-click-outside');
 import {getPredictionsFromPostcodeAPI} from './postcodeService';
 import {getPredictionsFromGoogle, getAddressFromGoogle} from './googleService';
 import {getPredictionsFromMaps9} from './maps9Service';

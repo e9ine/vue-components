@@ -126,7 +126,7 @@ export default {
                 chartOptions.chart.toolbar = {
                     show: true,
                     tools: {
-                        download: '<img src="' + require('@e9ine/vue_components/src/assets/menu.svg') + '" width="30">'
+                        download: '<img src="https://storage.googleapis.com/page9-dev-bucket/vue-components/menu.svg" width="30">'
                     }
                 };
             }

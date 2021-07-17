@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import Tabs from '../components/Tabs';
+import Tabs from '../components/Tabs.vue';
 export default {
     name: 'ModuleItemLayout',
     props: {
@@ -49,14 +49,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-    .tabs-wrapper {
-        font-family: Arial, Helvetica, sans-serif;
-        width: 100%;
-        .pre-tabs {
-            margin-bottom: 16px;
-        }
-        .tab-content {
-            margin-top: -2px;
-        }
+.tabs-wrapper {
+    font-family: Arial, Helvetica, sans-serif;
+    width: 100%;
+    .pre-tabs {
+        margin-bottom: 16px;
     }
+    .tab-content {
+        margin-top: -2px;
+    }
+}
 </style>

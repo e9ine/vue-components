@@ -2,9 +2,9 @@
     <transition name="fade">
         <div v-if="show" :class="{relative: relative}">
             <div class="overlay" :style="getOpacity">
-                <img src="@e9ine/vue_components/src/assets/close.svg" class="close" v-show="showClose && relative" @click="close" />
+                <img src="https://storage.googleapis.com/page9-dev-bucket/vue-components/close.svg" class="close" v-show="showClose && relative" @click="close" />
                 <div class="overlay-content" :class="customContentClass">
-                    <img src="@e9ine/vue_components/src/assets/close-dark.svg" class="close" v-show="showClose && !relative" @click="close" />
+                    <img src="https://storage.googleapis.com/page9-dev-bucket/vue-components/close-dark.svg" class="close" v-show="showClose && !relative" @click="close" />
                     <slot></slot>
                 </div>
             </div>

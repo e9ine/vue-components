@@ -63,7 +63,7 @@ input[type="number"] {
 		-webkit-appearance: none;
 		transition: border-color .15s ease-in-out;
 		&-icon{
-			background-image: url('~@e9ine/vue_components/src/assets/datepicker.svg');
+			background-image: url('https://storage.googleapis.com/page9-dev-bucket/vue-components/datepicker.svg');
 			background-repeat: no-repeat;
 			background-size: 1.5rem;
 			background-position: left 0.875rem center;
@@ -114,7 +114,7 @@ input[type="number"] {
 		}
 
 		&.datepicker {
-			background-image: url('~@e9ine/vue_components/src/assets/datepicker.svg');
+			background-image: url('https://storage.googleapis.com/page9-dev-bucket/vue-components/datepicker.svg');
 			background-repeat: no-repeat;
 			background-size: 1.5rem;
 			background-position: right 0.875rem center;
@@ -167,7 +167,7 @@ input[type="number"] {
 		cursor: pointer;
 		color: lighten($form-text, 15%);
 		font-weight: 400;
-		background-image: url('~@e9ine/vue_components/src/assets/select.png');
+		background-image: url('https://storage.googleapis.com/page9-dev-bucket/vue-components/select.png');
 		background-repeat: no-repeat;
 		background-size: 16px;
 		background-position: right 13px center;
@@ -222,7 +222,7 @@ input[type="number"] {
 				box-shadow: none;
 				border-color: $form-active;
 				color:$dark;
-				
+
 			}
 		}
 	}

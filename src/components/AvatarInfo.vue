@@ -34,7 +34,7 @@
 </template>
 
 <script>
-require('../directives/v-click-outside');
+import('../directives/v-click-outside');
 export default {
     name: 'AvatarInfo',
     props: {

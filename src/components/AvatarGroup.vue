@@ -1,5 +1,5 @@
 <template>
-    <div class="avatar-group" :style="{ marginLeft: avatarSize / 6 + 'px' }">
+    <div class="avatar-group" :style="{marginLeft: avatarSize / 6 + 'px'}">
         <Avatar
             :text="item.text"
             :size="avatarSize"
@@ -7,22 +7,18 @@
             :gravatar-email="item.gravatarEmail"
             v-for="(item, index) in avatarsToDisplay"
             :key="index"
-            :style="{ 'z-index': avatars.length - index, marginLeft: -(avatarSize / 6) + 'px' }"
+            :style="{'z-index': avatars.length - index, marginLeft: -(avatarSize / 6) + 'px'}"
         ></Avatar>
-        <div
-            class="avatar avatar-count"
-            v-if="avatars.length > max"
-            :style="{ marginLeft: - (avatarSize / 6) + 'px' }"
-        >
-            <div class="wrapper" :style="{ width: avatarSize + 'px', height: avatarSize + 'px' }">
-                <p :style="{ fontSize: avatarSize / 2.5 + 'px' }">+{{ avatars.length - max }}</p>
+        <div class="avatar avatar-count" v-if="avatars.length > max" :style="{marginLeft: -(avatarSize / 6) + 'px'}">
+            <div class="wrapper" :style="{width: avatarSize + 'px', height: avatarSize + 'px'}">
+                <p :style="{fontSize: avatarSize / 2.5 + 'px'}">+{{ avatars.length - max }}</p>
             </div>
         </div>
     </div>
 </template>
 
 <script>
-import Avatar from './Avatar';
+import Avatar from './Avatar.vue';
 
 export default {
     name: 'AvatarGroup',
@@ -54,4 +50,3 @@ export default {
     }
 };
 </script>
-

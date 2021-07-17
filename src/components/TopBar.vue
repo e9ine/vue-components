@@ -50,11 +50,11 @@
 </template>
 
 <script>
-import AvatarInfo from './AvatarInfo';
-import Avatar from './Avatar';
-import Tooltip from './Tooltip';
-import Button from './Button';
-import Badge from './Badge';
+import AvatarInfo from './AvatarInfo.vue';
+import Avatar from './Avatar.vue';
+import Tooltip from './Tooltip.vue';
+import Button from './Button.vue';
+import Badge from './Badge.vue';
 
 export default {
     name: 'TopBar',

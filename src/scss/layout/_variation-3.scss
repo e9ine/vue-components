@@ -85,7 +85,7 @@
                         line-height: 1.5;
                         font-size: 1rem;
                         background-color: $light;
-                        background-image: url('~@e9ine/vue_components/src/assets/search.svg');
+                        background-image: url('https://storage.googleapis.com/page9-dev-bucket/vue-components/search.svg');
                         background-repeat: no-repeat;
                         background-size: 1.5rem;
                         background-position: right 0.75rem center;
@@ -244,11 +244,11 @@
         }
     }
 
-    @media only screen 
-    and (device-width: 414px) 
-    and (device-height: 896px) 
-    and (-webkit-device-pixel-ratio: 2),(device-width : 375px) and (device-height : 812px) and (-webkit-device-pixel-ratio : 3),(device-width: 414px) 
-    and (device-height: 896px) 
+    @media only screen
+    and (device-width: 414px)
+    and (device-height: 896px)
+    and (-webkit-device-pixel-ratio: 2),(device-width : 375px) and (device-height : 812px) and (-webkit-device-pixel-ratio : 3),(device-width: 414px)
+    and (device-height: 896px)
     and (-webkit-device-pixel-ratio: 3)  {
         .tabbar {
             height: $tabbar-sm-height + 34px;

@@ -3,7 +3,7 @@
     "version": "1.1.6",
     "scripts": {
         "serve": "vue-cli-service serve",
-        "build": "vue-cli-service build",
+        "build": "cross-env NODE_ENV=production rollup --config build/rollup.config.es.js",
         "lint": "./node_modules/.bin/eslint --ext .vue .",
         "lint-fix": "vue-cli-service lint",
         "docs:dev": "vuepress dev docs",
@@ -23,7 +23,8 @@
         "src/views",
         "src/scss",
         "src/mixins",
-        "src/index.js"
+        "src/index.js",
+        "dist/*"
     ],
     "dependencies": {
         "apexcharts": "^3.17.0",
@@ -54,6 +55,7 @@
         "babel-eslint": "^10.1.0",
         "bootstrap-4-grid": "^3.4.0",
         "conventional-changelog-cli": "^2.0.34",
+        "cross-env": "^7.0.3",
         "dotenv": "^8.2.0",
         "eslint": "^5.16.0",
         "eslint-plugin-vue": "^5.0.0",
@@ -64,6 +66,13 @@
         "material-icons": "latest",
         "node-sass": "^4.13.1",
         "prettier": "^1.19.1",
+        "rollup": "^2.53.2",
+        "rollup-plugin-analyzer": "^4.0.0",
+        "rollup-plugin-babel": "^4.4.0",
+        "rollup-plugin-commonjs": "^10.1.0",
+        "rollup-plugin-postcss": "^2.0.3",
+        "rollup-plugin-replace": "^2.2.0",
+        "rollup-plugin-vue2": "^0.8.1",
         "sass-loader": "^8.0.2",
         "vue-json-pretty": "^1.6.3",
         "vue-router": "^3.1.6",
@@ -96,7 +105,7 @@
         }
     },
     "gitHooks": {
-        "pre-commit": "lint-staged",
+        "pre-commit": "lint-staged && npm run build && git add dist/vue-components.js",
         "commit-msg": "node scripts/verifyCommit.js"
     },
     "lint-staged": {

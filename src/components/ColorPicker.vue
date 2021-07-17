@@ -2,8 +2,7 @@
     <div ref="colorpicker">
         <div class="input-group color-picker">
             <input type="text" v-model="colorValue" @focus="showPicker" @input="updateFromInput" />
-            <span class="color-container"><span class="current-color" :style="'background-color: ' + colorValue" @click="togglePicker"></span>
-            </span>
+            <span class="color-container"><span class="current-color" :style="'background-color: ' + colorValue" @click="togglePicker"></span> </span>
         </div>
         <div class="color-picker-container" v-if="displayPicker">
             <chrome-picker :value="colors" @input="updateFromPicker" />
@@ -12,7 +11,7 @@
 </template>
 
 <script>
-import Chrome from 'vue-color/src/components/Chrome';
+import Chrome from 'vue-color/src/components/Chrome.vue';
 export default {
     name: 'ColorPicker',
     props: {
@@ -21,8 +20,7 @@ export default {
             validator: (value) => {
                 if (!value) {
                     return true;
-                }
-                else if (value[0] === '#') {
+                } else if (value[0] === '#') {
                     return true;
                 }
                 return false;
@@ -35,10 +33,10 @@ export default {
     data() {
         return {
             colors: {
-                hex: '#000000',
+                hex: '#000000'
             },
             colorValue: '',
-            displayPicker: false,
+            displayPicker: false
         };
     },
     methods: {
@@ -47,17 +45,16 @@ export default {
             this.colorValue = color;
         },
         updateColors(color) {
-            if(color.slice(0, 1) === '#') {
+            if (color.slice(0, 1) === '#') {
                 this.colors = {
                     hex: color
                 };
-            }
-            else if(color.slice(0, 4) === 'rgba') {
-                let rgba = color.replace(/^rgba?\(|\s+|\)$/g,'').split(','),
+            } else if (color.slice(0, 4) === 'rgba') {
+                let rgba = color.replace(/^rgba?\(|\s+|\)$/g, '').split(','),
                     hex = '#' + ((1 << 24) + (parseInt(rgba[0]) << 16) + (parseInt(rgba[1]) << 8) + parseInt(rgba[2])).toString(16).slice(1);
                 this.colors = {
                     hex: hex,
-                    a: rgba[3],
+                    a: rgba[3]
                 };
             }
         },
@@ -77,24 +74,23 @@ export default {
         },
         updateFromPicker(color) {
             this.colors = color;
-            if(color.rgba.a === 1) {
+            if (color.rgba.a === 1) {
                 this.colorValue = color.hex;
-            }
-            else {
+            } else {
                 this.colorValue = 'rgba(' + color.rgba.r + ', ' + color.rgba.g + ', ' + color.rgba.b + ', ' + color.rgba.a + ')';
             }
         },
         documentClick(e) {
             let el = this.$refs.colorpicker,
                 target = e.target;
-            if(el !== target && !el.contains(target)) {
+            if (el !== target && !el.contains(target)) {
                 this.hidePicker();
             }
         }
     },
     watch: {
         colorValue(val) {
-            if(val) {
+            if (val) {
                 this.updateColors(val);
                 this.$emit('updated', val);
                 this.$emit('update:color', val);
@@ -106,4 +102,3 @@ export default {
     }
 };
 </script>
-

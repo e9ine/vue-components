@@ -2,9 +2,11 @@
     <div class="card">
         <div class="card-container">
             <div class="card-actions-wrapper" v-if="options.actions && options.cardActionsLocation == 'top'">
-                <a href="" class="card-actions-toggle"><span class="material-icons" @click.prevent="toggleCardActions=!toggleCardActions">
+                <a href="" class="card-actions-toggle"
+                ><span class="material-icons" @click.prevent="toggleCardActions = !toggleCardActions">
                     more_vert
-                </span></a>
+                </span></a
+                >
                 <div class="card-actions" v-show="toggleCardActions">
                     <a class="link" v-for="(action, key) in options.actions" :key="key" :href="action.href" @click="handleAction(action.clickAction)">
                         {{ action.name }}
@@ -62,7 +64,7 @@
 </template>
 
 <script>
-import Avatar from './Avatar';
+import Avatar from './Avatar.vue';
 
 export default {
     name: 'Card',
@@ -101,7 +103,7 @@ export default {
     data() {
         return {
             toggle: false,
-            toggleCardActions:false
+            toggleCardActions: false
         };
     },
     methods: {

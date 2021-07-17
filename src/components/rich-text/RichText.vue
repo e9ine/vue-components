@@ -68,14 +68,14 @@
 </template>
 
 <script>
-import Button from '../Button';
-import IconButton from '../rich-text/IconButton';
+import Button from '../Button.vue';
+import IconButton from '../rich-text/IconButton.vue';
 import EmojiPicker from 'vue-emoji-picker';
-import Overlay from '../Overlay';
+import Overlay from '../Overlay.vue';
 import {Editor, EditorContent, EditorMenuBar} from 'tiptap';
 import EnterHandler from '../rich-text/EnterHandler';
 import {Blockquote, BulletList, OrderedList, Bold, Italic, Strike, Link, ListItem, HardBreak} from 'tiptap-extensions';
-import Icon from '../rich-text/Icon';
+import Icon from '../rich-text/Icon.vue';
 export default {
     name: 'RichText',
     props: {

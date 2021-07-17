@@ -9,7 +9,7 @@
                             <h4>
                                 <slot name="title">Modal Title</slot>
                             </h4>
-                            <a href="" class="modal-close" @click.prevent="close"><img src="@e9ine/vue_components/src/assets/close-dark.svg" alt="" /></a>
+                            <a href="" class="modal-close" @click.prevent="close"><img src="https://storage.googleapis.com/page9-dev-bucket/vue-components/close-dark.svg" alt="" /></a>
                         </div>
                     </div>
                     <div class="modal-body">

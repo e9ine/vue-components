@@ -92,7 +92,7 @@ export default {
             if (this.loaderImage) {
                 return this.loaderImage;
             }
-            return require('@e9ine/vue_components/src/assets/loader.svg');
+            return 'https://storage.googleapis.com/page9-dev-bucket/vue-components/loader.svg';
         }
     },
     created() {

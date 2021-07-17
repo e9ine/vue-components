@@ -131,20 +131,19 @@
 
 <script>
 import axios from 'axios';
-import Button from '@/components/Button';
-
+import {Button} from '../../../dist/vue-components';
 
 export default {
     name: 'ButtonExample',
     components: {
-        Button,
+        Button
     },
     methods: {
         async callAsyncApi() {
             try {
                 let result = await axios.get('http://slowwly.robertomurray.co.uk/delay/3000/url/https://jsonplaceholder.typicode.com/todos/1');
                 alert(JSON.stringify(result.data));
-            } catch(e) {
+            } catch (e) {
                 console.log('Handle Error');
             }
         },
@@ -156,15 +155,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-    .buttons {
-        &-info {
-            display: inline-grid;
-            margin: 0 16px 16px 0;
-            label {
-                display: block;
-                color:$grey;
-                margin-bottom: 8px;
-            }
+.buttons {
+    &-info {
+        display: inline-grid;
+        margin: 0 16px 16px 0;
+        label {
+            display: block;
+            color: $grey;
+            margin-bottom: 8px;
         }
     }
+}
 </style>
