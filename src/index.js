@@ -1,6 +1,6 @@
 /* prettier-ignore */
 // export components from ./components
-export {fromArray, download, escape} from './utils/CSV';
+export { fromArray, download, escape } from './utils/CSV'
 export {sortArrayByProperty, checkValidHex} from './utils/CommonUtils';
 
 export {default as Avatar} from './components/Avatar';

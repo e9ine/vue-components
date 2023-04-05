@@ -1,24 +1,25 @@
 <template>
     <div class="tabs-wrapper">
         <div :class="{'pre-tabs': $slots.pre}">
-            <slot name="pre"></slot>
+            <slot name="pre" />
         </div>
-        <Tabs :data="tabs" :type="type" :limit="3"></Tabs>
-        <div class="tab-content" v-if="rData && !$route.meta.isKeepAlive">
-            <router-view></router-view>
+        <Tabs :data="tabs" :type="type" :limit="3" />
+        <div v-if="rData && !$route.meta.isKeepAlive" class="tab-content">
+            <router-view />
         </div>
-        <div class="tab-content" v-else-if="rData && $route.meta.isKeepAlive">
+        <div v-else-if="rData && $route.meta.isKeepAlive" class="tab-content">
             <keep-alive>
-                <router-view></router-view>
+                <router-view />
             </keep-alive>
         </div>
     </div>
 </template>
 
 <script>
-import Tabs from '../components/Tabs';
+import Tabs from '../components/Tabs.vue';
 export default {
     name: 'ModuleItemLayout',
+    components: {Tabs},
     props: {
         tabs: {
             type: Array,
@@ -39,7 +40,6 @@ export default {
             }
         }
     },
-    components: {Tabs},
     data() {
         return {
             morePosition: {}
@@ -49,14 +49,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-    .tabs-wrapper {
-        font-family: Arial, Helvetica, sans-serif;
-        width: 100%;
-        .pre-tabs {
-            margin-bottom: 16px;
-        }
-        .tab-content {
-            margin-top: -2px;
-        }
+.tabs-wrapper {
+    font-family: Arial, Helvetica, sans-serif;
+    width: 100%;
+    .pre-tabs {
+        margin-bottom: 16px;
     }
+    .tab-content {
+        margin-top: -2px;
+    }
+}
 </style>

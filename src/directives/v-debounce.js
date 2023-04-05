@@ -2,8 +2,9 @@ import Vue from 'vue';
 
 export default Vue.directive('debounce', {
     bind: (el, bind) => {
-        if (bind.value !== bind.oldValue) { // change debounce only if interval has changed
-            el.oninput = debounce(function () {
+        if (bind.value !== bind.oldValue) {
+            // change debounce only if interval has changed
+            el.oninput = debounce(function() {
                 el.dispatchEvent(createNewEvent('change'));
             }, parseInt(bind.value) || 300);
         }
@@ -27,7 +28,7 @@ const debounce = (fn, delay) => {
 
 const createNewEvent = (eventName) => {
     let e;
-    if (typeof(Event) === 'function') {
+    if (typeof Event === 'function') {
         e = new Event(eventName);
     } else {
         e = document.createEvent('Event');

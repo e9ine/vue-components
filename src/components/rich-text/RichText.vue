@@ -1,8 +1,8 @@
 <template>
     <div class="rich-text-editor">
-        <editor-content :editor="editor" ref="editor" />
+        <editor-content ref="editor" :editor="editor" />
         <div class="extensions-images">
-            <div class="image-wrapper" v-for="(item, key) in attachments" :key="key">
+            <div v-for="(item, key) in attachments" :key="key" class="image-wrapper">
                 <img :alt="key" :src="options.attachmentKey ? item[options.attachmentKey] : item" @click="previewAttachment(key, item)" />
                 <button class="icon-button icon-button-top" @click="removeAttachment(key, item)">
                     <Icon name="close" />
@@ -10,14 +10,14 @@
             </div>
         </div>
         <div class="rich-text-editor-extensions">
-            <editor-menu-bar :editor="editor" v-slot="{commands, isActive, getMarkAttrs}">
+            <editor-menu-bar v-slot="{commands, isActive, getMarkAttrs}" :editor="editor">
                 <div>
                     <Overlay :show="linkMenuIsActive" :opacity="0.4" :show-close="false">
                         <form class="link-modal">
                             <h4>Add link</h4>
                             <div class="form-group">
-                                <label for="link" class="control-label"></label>
-                                <input id="link" class="form-control" type="text" v-model="linkUrl" placeholder="https://" ref="linkInput" @keydown.esc="hideLinkMenu" autocomplete="off" />
+                                <label for="link" class="control-label" />
+                                <input id="link" ref="linkInput" v-model="linkUrl" class="form-control" type="text" placeholder="https://" autocomplete="off" @keydown.esc="hideLinkMenu" />
                             </div>
                             <Button class="mr-2" type="danger" text="Cancel" :action="() => setLinkUrl(commands.link, null)" />
                             <Button type="success" text="Save" :action="() => setLinkUrl(commands.link, linkUrl)" />
@@ -32,24 +32,24 @@
                             <IconButton icon="format_list_bulleted" :class="{visible: isFormatterActive, active: isActive.bullet_list()}" :action="commands.bullet_list" />
                             <IconButton icon="format_list_numbered" :class="{visible: isFormatterActive, active: isActive.ordered_list()}" :action="commands.ordered_list" />
                             <IconButton icon="format_quote" :class="{visible: isFormatterActive, active: isActive.blockquote()}" :action="commands.blockquote" />
-                            <IconButton icon="link" v-if="!linkMenuIsActive" :class="{visible: isFormatterActive, active: isActive.link()}" :action="() => showLinkMenu(getMarkAttrs('link'))" />
+                            <IconButton v-if="!linkMenuIsActive" icon="link" :class="{visible: isFormatterActive, active: isActive.link()}" :action="() => showLinkMenu(getMarkAttrs('link'))" />
                         </div>
                         <div class="extensions-extra">
-                            <emoji-picker @emoji="append" :search="search">
-                                <button class="icon-button" slot="emoji-invoker" slot-scope="{events: {click: clickEvent}}" @click.stop="clickEvent">
+                            <emoji-picker :search="search" @emoji="append">
+                                <button slot="emoji-invoker" slot-scope="{events: {click: clickEvent}}" class="icon-button" @click.stop="clickEvent">
                                     <Icon name="sentiment_satisfied_alt" />
                                 </button>
                                 <div slot="emoji-picker" slot-scope="{emojis, insert}">
                                     <div style="position: relative">
                                         <div class="emoji-picker">
                                             <div class="form-group">
-                                                <input aria-label="emoji-picker" class="form-control border" type="text" v-model="search" />
+                                                <input v-model="search" aria-label="emoji-picker" class="form-control border" type="text" />
                                             </div>
                                             <div>
                                                 <div v-for="(emojiGroup, category) in emojis" :key="category">
                                                     <h5>{{ category }}</h5>
                                                     <div class="emojis">
-                                                        <span v-for="(emoji, emojiName) in emojiGroup" :key="emojiName" @click="insert(emoji)" :title="emojiName">{{ emoji }}</span>
+                                                        <span v-for="(emoji, emojiName) in emojiGroup" :key="emojiName" :title="emojiName" @click="insert(emoji)">{{ emoji }}</span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -58,7 +58,7 @@
                                 </div>
                             </emoji-picker>
                             <IconButton icon="attachment" :action="addAttachment" />
-                            <IconButton class="send" icon="send" v-if="options.content !== '<p></p>'" :action="send" />
+                            <IconButton v-if="options.content !== '<p></p>'" class="send" icon="send" :action="send" />
                         </div>
                     </div>
                 </div>
@@ -68,16 +68,25 @@
 </template>
 
 <script>
-import Button from '../Button';
-import IconButton from '../rich-text/IconButton';
+import Button from '../Button.vue';
+import IconButton from '../rich-text/IconButton.vue';
 import EmojiPicker from 'vue-emoji-picker';
-import Overlay from '../Overlay';
+import Overlay from '../Overlay.vue';
 import {Editor, EditorContent, EditorMenuBar} from 'tiptap';
 import EnterHandler from '../rich-text/EnterHandler';
 import {Blockquote, BulletList, OrderedList, Bold, Italic, Strike, Link, ListItem, HardBreak} from 'tiptap-extensions';
-import Icon from '../rich-text/Icon';
+import Icon from '../rich-text/Icon.vue';
 export default {
     name: 'RichText',
+    components: {
+        Button,
+        Icon,
+        IconButton,
+        EditorMenuBar,
+        EditorContent,
+        EmojiPicker,
+        Overlay
+    },
     props: {
         options: {
             type: Object,
@@ -103,15 +112,6 @@ export default {
             type: Function,
             default: () => {}
         }
-    },
-    components: {
-        Button,
-        Icon,
-        IconButton,
-        EditorMenuBar,
-        EditorContent,
-        EmojiPicker,
-        Overlay
     },
     data() {
         return {
@@ -139,6 +139,9 @@ export default {
             search: '',
             isFormatterActive: false
         };
+    },
+    beforeDestroy() {
+        this.editor.destroy();
     },
     methods: {
         activateFormatter() {
@@ -175,9 +178,6 @@ export default {
             const transaction = this.editor.state.tr.insertText(emoji);
             this.editor.view.dispatch(transaction);
         }
-    },
-    beforeDestroy() {
-        this.editor.destroy();
     }
 };
 </script>

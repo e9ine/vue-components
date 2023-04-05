@@ -1,8 +1,8 @@
 <template>
-    <div class="chip" ref="chip">
-        <slot name="pre"></slot>
+    <div ref="chip" class="chip">
+        <slot name="pre" />
         {{ text }} <i v-if="!hideRemove" class="material-icons" @click="$emit('removed', value)">cancel</i>
-        <slot name="post"></slot>
+        <slot name="post" />
     </div>
 </template>
 
@@ -24,8 +24,8 @@ export default {
         }
     },
     mounted() {
-        let height=this.$refs.chip.clientHeight;
-        this.$refs.chip.style.borderRadius=height/2+'px';
-    },
+        let height = this.$refs.chip.clientHeight;
+        this.$refs.chip.style.borderRadius = height / 2 + 'px';
+    }
 };
 </script>

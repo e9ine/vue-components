@@ -1,17 +1,17 @@
 <template>
     <div class="row">
         <div class="col-sm-4">
-            <ColorPicker :color.sync="defaultColour"></ColorPicker>
+            <ColorPicker :color.sync="defaultColour" />
         </div>
     </div>
 </template>
 
 <script>
-import ColorPicker from '@/components/ColorPicker';
+import ColorPicker from '@/components/ColorPicker.vue';
 export default {
     name: 'ColorPickerExample',
     components: {
-        ColorPicker,
+        ColorPicker
     },
     data() {
         return {
@@ -21,5 +21,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>

@@ -1,19 +1,21 @@
 <template>
     <div class="e9-chart">
-        <component :is="component" :options="mutableOptions" :width="width" :height="height" :data="data" v-if="!showTable"></component>
-        <div class="chart-table-graph" v-if="showTable">
+        <component :is="component" v-if="!showTable" :options="mutableOptions" :width="width" :height="height" :data="data" />
+        <div v-if="showTable" class="chart-table-graph">
             <div class="graph-wrapper" :class="type.toLowerCase()">
-                <component :is="component" :options="mutableOptions" :width="width" :height="height" :data="data"></component>
+                <component :is="component" :options="mutableOptions" :width="width" :height="height" :data="data" />
             </div>
-            <div class="chart-table-wrapper" :class="type.toLowerCase()" v-if="tableData && tableData.data && tableData.data.length > 0" :style="{'max-height': height}">
+            <div v-if="tableData && tableData.data && tableData.data.length > 0" class="chart-table-wrapper" :class="type.toLowerCase()" :style="{'max-height': height}">
                 <div class="chart-table-header">
                     <div v-for="(item, key) in tableData.header" :key="key" class="header" :style="getStyle(tableData.header.length, key)">
                         {{ item }}
                     </div>
                 </div>
                 <div class="chart-table-body">
-                    <div class="chart-table-row" v-for="(item, key1) in tableData.data" :key="key1" @click="allowClick && itemSelected(item, key1)" :style="getRowStyle()">
-                        <div class="chart-table-column" v-for="(col, key2) in item" :key="key2" :style="getStyle(tableData.header.length, key2)">{{ col }}</div>
+                    <div v-for="(item, key1) in tableData.data" :key="key1" class="chart-table-row" :style="getRowStyle()" @click="allowClick && itemSelected(item, key1)">
+                        <div v-for="(col, key2) in item" :key="key2" class="chart-table-column" :style="getStyle(tableData.header.length, key2)">
+                            {{ col }}
+                        </div>
                         <br style=" clear:both " />
                     </div>
                 </div>
@@ -24,6 +26,8 @@
 
 <script>
 import Vue from 'vue';
+import menuSVG from '../../assets/menu.svg?url';
+
 Vue.filter('truncateChars', (val, num) => {
     let result = '';
     val = val + '';
@@ -81,58 +85,6 @@ export default {
             mutableOptions: {}
         };
     },
-    methods: {
-        itemSelected(row, key) {
-            let filter = this.tableData.data[key];
-            this.$emit('chartItemClicked', {
-                item: filter,
-                index: key
-            });
-        },
-        getRowStyle() {
-            return this.allowClick ? [{cursor: 'pointer'}] : [{cursor: 'auto'}];
-        },
-        getStyle(size, key) {
-            if (size <= 2) {
-                if (key == 0 || key == 'Title') return [{width: '70%', 'text-align': 'left'}];
-                else return [{width: '30%', 'text-align': 'right'}];
-            } else {
-                if (key == 0 || key == 'Title') return [{width: '40%', 'text-align': 'left'}];
-                else return [{width: 60 / (size - 1) + '%', 'text-align': 'right'}];
-            }
-        },
-        populateChartOptions(defaultOptions) {
-            let chartOptions = JSON.parse(JSON.stringify(defaultOptions));
-            chartOptions.chart.id = this.title ? this.title : this.type;
-            if (!chartOptions.chart.fontFamily) {
-                chartOptions.chart.fontFamily = 'Arial';
-            }
-            if (this.mutableOptions) {
-                for (const p in this.mutableOptions) {
-                    if (!chartOptions[p]) chartOptions[p] = {};
-                    if (typeof this.mutableOptions[p] == 'object') {
-                        for (const innerP in this.mutableOptions[p]) {
-                            if (!chartOptions[p][innerP]) chartOptions[p][innerP] = {};
-                            chartOptions[p][innerP] = this.mutableOptions[p][innerP];
-                        }
-                    } else {
-                        chartOptions[p] = this.mutableOptions[p];
-                    }
-                }
-            }
-            chartOptions.colors = this.colors;
-            chartOptions.title.text = this.title ? this.title : '';
-            if (!chartOptions.chart.toolbar) {
-                chartOptions.chart.toolbar = {
-                    show: true,
-                    tools: {
-                        download: '<img src="' + require('@e9ine/vue_components/src/assets/menu.svg') + '" width="30">'
-                    }
-                };
-            }
-            return chartOptions;
-        }
-    },
     computed: {
         tableData() {
             let tableData = {
@@ -143,9 +95,9 @@ export default {
                 let _data = {
                     Title: this.data.categories[i]
                 };
-                if (this.type != 'Pie' && this.type != 'Donut') {
+                if (this.type !== 'Pie' && this.type !== 'Donut') {
                     for (let j = 0, leng = this.data.series.length; j < leng; j++) {
-                        if (i == 0) {
+                        if (i === 0) {
                             tableData.header.push(this.data.series[j].name || 'Value ' + (j + 1));
                         }
                         let _name = this.data.series[j].name || 'Value ' + (j + 1);
@@ -153,7 +105,7 @@ export default {
                     }
                 } else {
                     for (let j = 0, leng = this.data.series.length; j < leng; j++) {
-                        if (i == 0 && j == 0) {
+                        if (i === 0 && j === 0) {
                             tableData.header.push('Value');
                         }
                         _data['Value'] = this.data.series[i];
@@ -191,6 +143,58 @@ export default {
     },
     created() {
         this.component = () => import('./' + this.type + '.vue');
+    },
+    methods: {
+        itemSelected(row, key) {
+            let filter = this.tableData.data[key];
+            this.$emit('chartItemClicked', {
+                item: filter,
+                index: key
+            });
+        },
+        getRowStyle() {
+            return this.allowClick ? [{cursor: 'pointer'}] : [{cursor: 'auto'}];
+        },
+        getStyle(size, key) {
+            if (size <= 2) {
+                if (key === 0 || key === 'Title') return [{width: '70%', 'text-align': 'left'}];
+                else return [{width: '30%', 'text-align': 'right'}];
+            } else {
+                if (key === 0 || key === 'Title') return [{width: '40%', 'text-align': 'left'}];
+                else return [{width: 60 / (size - 1) + '%', 'text-align': 'right'}];
+            }
+        },
+        populateChartOptions(defaultOptions) {
+            let chartOptions = JSON.parse(JSON.stringify(defaultOptions));
+            chartOptions.chart.id = this.title ? this.title : this.type;
+            if (!chartOptions.chart.fontFamily) {
+                chartOptions.chart.fontFamily = 'Arial';
+            }
+            if (this.mutableOptions) {
+                for (const p in this.mutableOptions) {
+                    if (!chartOptions[p]) chartOptions[p] = {};
+                    if (typeof this.mutableOptions[p] === 'object') {
+                        for (const innerP in this.mutableOptions[p]) {
+                            if (!chartOptions[p][innerP]) chartOptions[p][innerP] = {};
+                            chartOptions[p][innerP] = this.mutableOptions[p][innerP];
+                        }
+                    } else {
+                        chartOptions[p] = this.mutableOptions[p];
+                    }
+                }
+            }
+            chartOptions.colors = this.colors;
+            chartOptions.title.text = this.title ? this.title : '';
+            if (!chartOptions.chart.toolbar) {
+                chartOptions.chart.toolbar = {
+                    show: true,
+                    tools: {
+                        download: '<img src="' + menuSVG + '" width="30">'
+                    }
+                };
+            }
+            return chartOptions;
+        }
     }
 };
 </script>

@@ -1,7 +1,6 @@
 <template>
     <div>
-        <apexchart class="stackedcolumn-chart" :width="width" :height="height" type="bar" :options="chartOptions" :series="data.series">
-        </apexchart>
+        <apexchart class="stackedcolumn-chart" :width="width" :height="height" type="bar" :options="chartOptions" :series="data.series" />
     </div>
 </template>
 
@@ -19,11 +18,14 @@ let defaultOptions = {
         offsetY: 8
     },
     xaxis: {
-        categories: [],
+        categories: []
     }
 };
 export default {
     name: 'Bar',
+    components: {
+        apexchart: () => import('vue-apexcharts')
+    },
     props: {
         tite: {
             type: String
@@ -47,9 +49,6 @@ export default {
             default: null
         }
     },
-    components: {
-        apexchart: () => import('vue-apexcharts')
-    },
     computed: {
         chartOptions() {
             let chartOptions = this.$parent.populateChartOptions(defaultOptions);
@@ -57,10 +56,8 @@ export default {
             return chartOptions;
         }
     },
-    created() {
-    },
+    created() {}
 };
 </script>
 
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>

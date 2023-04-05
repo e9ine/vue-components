@@ -8,7 +8,7 @@
             :collapsible="true"
             :options="panelOptions"
         >
-            <template v-slot:panelBody>
+            <template #panelBody>
                 <div class="panel-body-content">
                     <p>
                         Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis voluptatibus repellat vel labore quisquam impedit dolore, commodi, hic praesentium iusto, eum obcaecati
@@ -16,7 +16,7 @@
                     </p>
                 </div>
             </template>
-            <template v-slot:panelFooter>
+            <template #panelFooter>
                 <div class="panel-footer-content">
                     <p>
                         Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ipsam voluptatum harum recusandae. Rem, nulla esse! Deserunt tempora eum, cum iusto ex sequi voluptatem exercitationem
@@ -25,7 +25,7 @@
                 </div>
             </template>
         </Panel>
-        <div class="spacer-v"></div>
+        <div class="spacer-v" />
         <h4>Accordion</h4>
         <Panel
             title="Plot 1 Bathroom"
@@ -34,7 +34,7 @@
             :collapsible="true"
             class="accordion"
         >
-            <template v-slot:panelBody>
+            <template #panelBody>
                 <div class="panel-body-content">
                     <hr />
                     <p>
@@ -47,7 +47,7 @@
     </div>
 </template>
 <script>
-import Panel from '@/components/Panel';
+import Panel from '@/components/Panel.vue';
 export default {
     name: 'App',
     components: {

@@ -3,12 +3,17 @@ export function fromArray(array) {
 
     var fields = [];
     for (var key in array[0]) {
-        if (key[0] != '$')
+        if (key[0] !== '$') {
             fields.push(escape(key));
+        }
     }
-    rows.push(fields.map(function (f) {
-        return '"' + f + '"';
-    }).join(','));
+    rows.push(
+        fields
+            .map(function(f) {
+                return '"' + f + '"';
+            })
+            .join(',')
+    );
 
     for (var i = 0; i < array.length; i++) {
         var item = array[i];
@@ -34,5 +39,5 @@ export function download(array, filename) {
 }
 
 export function escape(value) {
-    return value ? ('' + value).replace('"', '\"') : '<null>';
+    return value ? ('' + value).replace('"', '"') : '<null>';
 }

@@ -14,13 +14,13 @@ export default {
     props: {
         img: {
             type: Boolean,
-            default: false,
-        },
+            default: false
+        }
     },
-    data () {
+    data() {
         return {
-            className: 'shimmer-heading',
+            className: 'shimmer-heading'
         };
-    },
+    }
 };
 </script>

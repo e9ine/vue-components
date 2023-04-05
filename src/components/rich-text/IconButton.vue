@@ -5,9 +5,12 @@
 </template>
 
 <script>
-import Icon from '../../components/rich-text/Icon';
+import Icon from '../../components/rich-text/Icon.vue';
 export default {
     name: 'IconButton',
+    components: {
+        Icon
+    },
     props: {
         icon: {
             type: String,
@@ -17,9 +20,6 @@ export default {
             type: Function,
             default: () => {}
         }
-    },
-    components: {
-        Icon
     }
 };
 </script>

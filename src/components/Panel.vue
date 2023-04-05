@@ -1,41 +1,44 @@
 <template>
     <div class="panel" :class="collapsed ? 'panel-collapsed' : ''">
         <div class="panel-header">
-            <div class="panel-info" v-if="title || subTitle">
-                <h6 v-text="title" class="title-s"></h6>
-                <p class="subtitle-s" v-text="subTitle"></p>
+            <div v-if="title || subTitle" class="panel-info">
+                <h6 class="title-s" v-text="title" />
+                <p class="subtitle-s" v-text="subTitle" />
             </div>
             <div class="panel-options">
-                <a href="" @click.prevent="handleAction(options.download)" v-if="options.download">
+                <a v-if="options.download" href="" @click.prevent="handleAction(options.download)">
                     <span class="material-icons">get_app</span>
                 </a>
-                <a href="" @click.prevent="handleAction(options.refresh)" v-if="options.refresh">
+                <a v-if="options.refresh" href="" @click.prevent="handleAction(options.refresh)">
                     <span class="material-icons">refresh</span>
                 </a>
-                <a href="" v-if="options.info">
+                <a v-if="options.info" href="">
                     <Tooltip :message="options.info.message" :position="options.info.position">
                         <span class="material-icons">info</span>
                     </Tooltip>
                 </a>
-                <a href="" @click.prevent="toggleCollapse()" class="collapse" v-if="collapsible">
+                <a v-if="collapsible" href="" class="collapse" @click.prevent="toggleCollapse()">
                     <span class="material-icons">keyboard_arrow_up</span>
                 </a>
             </div>
         </div>
-        <div class="collapsible" ref="collapsible">
+        <div ref="collapsible" class="collapsible">
             <div class="panel-body">
-                <slot name="panelBody"></slot>
+                <slot name="panelBody" />
             </div>
             <div class="panel-footer">
-                <slot name="panelFooter"></slot>
+                <slot name="panelFooter" />
             </div>
         </div>
     </div>
 </template>
 <script>
-import Tooltip from '../components/Tooltip';
+import Tooltip from '../components/Tooltip.vue';
 export default {
     name: 'Panel',
+    components: {
+        Tooltip
+    },
     props: {
         title: {
             type: String
@@ -54,13 +57,13 @@ export default {
             }
         }
     },
-    components: {
-        Tooltip
-    },
     data() {
         return {
             collapsed: false
         };
+    },
+    mounted() {
+        if (this.collapsible) this.$refs.collapsible.style.maxHeight = this.$refs.collapsible.scrollHeight + 'px';
     },
     methods: {
         handleAction(fn) {
@@ -75,9 +78,6 @@ export default {
             if (this.collapsed) this.$refs.collapsible.style.maxHeight = 0;
             else this.$refs.collapsible.style.maxHeight = this.$refs.collapsible.scrollHeight + 'px';
         }
-    },
-    mounted() {
-        if (this.collapsible) this.$refs.collapsible.style.maxHeight = this.$refs.collapsible.scrollHeight + 'px';
     }
 };
 </script>

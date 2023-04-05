@@ -1,13 +1,13 @@
 <template>
     <div>
         <Table :items="items" :headings="columns" :pagination.sync="pagination" table-class="table-bordered" thead-class="thead-light" :is-expandable="true" :options="tableOptions">
-            <template v-slot:OS="data">
-                <div class="logo" :style="{'background-image': 'url(' + getImageUrl(data) + ')'}"></div>
+            <template #OS="data">
+                <div class="logo" :style="{'background-image': 'url(' + getImageUrl(data) + ')'}" />
             </template>
-            <template v-slot:Action="data">
+            <template #Action="data">
                 <p>{{ data }}</p>
             </template>
-            <template v-slot:expanded-area="data">
+            <template #expanded-area="data">
                 <div class="result">
                     <pre>{{ data.data.row.result }}</pre>
                 </div>
@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import Table from '@/components/Table';
+import Table from '@/components/Table.vue';
 
 export default {
     name: 'NormalTable',

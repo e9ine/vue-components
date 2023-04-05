@@ -1,23 +1,25 @@
 <template>
     <div class="tabs-wrapper">
-        <ul class="tabs" :class="[type,fill?'tabs-fill':'',align?'tabs-'+align:'',stacked?'tabs-stacked':'',wrap?'tabs-wrap':'']" :id="'tabs-'+id">
+        <ul :id="'tabs-' + id" class="tabs" :class="[type, fill ? 'tabs-fill' : '', align ? 'tabs-' + align : '', stacked ? 'tabs-stacked' : '', wrap ? 'tabs-wrap' : '']">
             <li v-for="(tab, key) in displayedTabs" :key="key">
                 <router-link v-if="tab.path" tag="a" :to="tab.path" active-class="active">
                     <span>{{ tab.name }}</span>
                 </router-link>
-                <a v-else @click="selectTab(tab, key)" :class="{active: active === key, disabled: tab.disabled}">
+                <a v-else :class="{active: active === key, disabled: tab.disabled}" @click="selectTab(tab, key)">
                     <span>{{ tab.name }}</span>
                 </a>
             </li>
-            <li class="has-dropdown" v-if="limit && data.length - displayedTabs.length > 0" id="more-nav-selector">
+            <li v-if="limit && data.length - displayedTabs.length > 0" id="more-nav-selector" class="has-dropdown">
                 <a>
                     More
-                    <div class="arrow-down"></div>
+                    <div class="arrow-down" />
                 </a>
-                <ul class="sub-nav" id="more-nav">
+                <ul id="more-nav" class="sub-nav">
                     <li v-for="(tab, subKey) in data.slice(limit)" :key="subKey + displayedTabs.length">
-                        <router-link v-if="tab.path" tag="a" :to="tab.path">{{ tab.name }}</router-link>
-                        <a v-else @click="selectTab(tab, subKey + displayedTabs.length)" :class="{disabled: tab.disabled}">{{ tab.name }}</a>
+                        <router-link v-if="tab.path" tag="a" :to="tab.path">
+                            {{ tab.name }}
+                        </router-link>
+                        <a v-else :class="{disabled: tab.disabled}" @click="selectTab(tab, subKey + displayedTabs.length)">{{ tab.name }}</a>
                     </li>
                 </ul>
             </li>
@@ -59,19 +61,12 @@ export default {
         wrap: {
             type: Boolean,
             default: false
-        },
+        }
     },
     data() {
         return {
             id: null
         };
-    },
-    methods: {
-        selectTab(tab, index) {
-            if (tab.disabled) return false;
-            this.$emit('update:active', index);
-            this.$emit('changed', index);
-        }
     },
     computed: {
         displayedTabs() {
@@ -81,21 +76,27 @@ export default {
             return this.data;
         }
     },
-    mounted () {
-        let tabsId='#tabs-'+this.id;
-        let moreSelector=$(tabsId+' #more-nav-selector');
-        if(moreSelector.length!=0){         
-            let position=$(moreSelector).position();
-            if($(tabsId).width() < position.left)
-                window.$(tabsId+' #more-nav').css({'left':'unset','right':0});
-            else
-                window.$(tabsId+' #more-nav').css({'left':position.left,'right':'unset'});
+    mounted() {
+        let tabsId = '#tabs-' + this.id;
+        let moreSelector = $(tabsId + ' #more-nav-selector');
+        if (moreSelector.length !== 0) {
+            let position = $(moreSelector).position();
+            if ($(tabsId).width() < position.left) {
+                window.$(tabsId + ' #more-nav').css({left: 'unset', right: 0});
+            } else {
+                window.$(tabsId + ' #more-nav').css({left: position.left, right: 'unset'});
+            }
         }
-      
     },
-    created () {
+    created() {
         this.id = this._uid;
     },
+    methods: {
+        selectTab(tab, index) {
+            if (tab.disabled) return false;
+            this.$emit('update:active', index);
+            this.$emit('changed', index);
+        }
+    }
 };
 </script>
-

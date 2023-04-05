@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col-sm-4">
             <Panel>
-                <template v-slot:panelBody>
+                <template #panelBody>
                     <div class="shimmer-wrapper">
                         <Shimmer>
                             <ShimmerHeading :img="true" />
@@ -12,14 +12,14 @@
                 </template>
             </Panel>
         </div>
-    </div>      
+    </div>
 </template>
 
 <script>
-import Shimmer from '@/components/shimmer/Component';
-import ShimmerHeading from '@/components/shimmer/ShimmerHeading';
-import ShimmerText from '@/components/shimmer/ShimmerText';
-import Panel from '@/components/Panel';
+import Shimmer from '@/components/shimmer/Component.vue';
+import ShimmerHeading from '@/components/shimmer/ShimmerHeading.vue';
+import ShimmerText from '@/components/shimmer/ShimmerText.vue';
+import Panel from '@/components/Panel.vue';
 
 export default {
     name: 'ShimmerExample',
@@ -39,7 +39,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.shimmer-wrapper{
+.shimmer-wrapper {
     padding: $default-content-padding;
 }
 </style>

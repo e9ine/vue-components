@@ -1,6 +1,6 @@
 <template>
     <div class="app">
-        <TimepickerExample></TimepickerExample>
+        <TimepickerExample />
     </div>
 </template>
 

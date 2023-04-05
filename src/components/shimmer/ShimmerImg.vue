@@ -5,10 +5,10 @@
 <script>
 export default {
     name: 'ShimmerImg',
-    data () {
+    data() {
         return {
-            className: 'shimmer-img',
+            className: 'shimmer-img'
         };
-    },
+    }
 };
 </script>

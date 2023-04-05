@@ -1,6 +1,6 @@
 <template>
     <div>
-        <apexchart class="area-chart" :width="width" :height="height" :options="chartOptions" :series="data.series"> </apexchart>
+        <apexchart class="area-chart" :width="width" :height="height" :options="chartOptions" :series="data.series" />
     </div>
 </template>
 
@@ -25,6 +25,9 @@ let defaultOptions = {
 };
 export default {
     name: 'LineChart',
+    components: {
+        apexchart: () => import('vue-apexcharts')
+    },
     props: {
         title: {
             type: String
@@ -47,9 +50,6 @@ export default {
             type: Object,
             default: null
         }
-    },
-    components: {
-        apexchart: () => import('vue-apexcharts')
     },
     computed: {
         chartOptions() {

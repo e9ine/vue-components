@@ -1,36 +1,36 @@
 <template>
     <div>
-        <Button size="md" type="primary" text="Create" :action="showModal"></Button>
-        <Button size="md" type="danger" text="Delete" :action="showModal2" class="ml-2"></Button>
-        <Button size="md" type="danger" text="Image Selector" :action="showModal3" class="ml-2"></Button>
-        <Modal v-model="show1" size="lg" @cancel="cancel" @save="modalOKed" centered>
-            <template v-slot:title>
+        <Button size="md" type="primary" text="Create" :action="showModal" />
+        <Button size="md" type="danger" text="Delete" :action="showModal2" class="ml-2" />
+        <Button size="md" type="danger" text="Image Selector" :action="showModal3" class="ml-2" />
+        <Modal v-model="show1" size="lg" centered @cancel="cancel" @save="modalOKed">
+            <template #title>
                 {{ header }}
             </template>
-            <template v-slot:body>
+            <template #body>
                 <p>Are you sure you want to delete this item?</p>
             </template>
-            <template v-slot:footer>
-                <Button size="md" type="border-primary" text="Cancel" :action="cancel"></Button>
-                <Button size="md" type="primary" text="Save" :action="save"></Button>
+            <template #footer>
+                <Button size="md" type="border-primary" text="Cancel" :action="cancel" />
+                <Button size="md" type="primary" text="Save" :action="save" />
             </template>
         </Modal>
         <Modal v-model="show2" size="md" @cancel="cancel" @save="modalOKed">
-            <template v-slot:body>
+            <template #body>
                 <p>Are you sure you want to delete this item?</p>
             </template>
-            <template v-slot:footer>
-                <Button size="md" type="border-primary" text="Cancel" :action="cancel"></Button>
-                <Button size="md" type="primary" text="Delete" :action="save"></Button>
+            <template #footer>
+                <Button size="md" type="border-primary" text="Cancel" :action="cancel" />
+                <Button size="md" type="primary" text="Delete" :action="save" />
             </template>
         </Modal>
-        <ImageSelector v-model="show3" @cancel="cancel" @close="close"></ImageSelector>
+        <ImageSelector v-model="show3" @cancel="cancel" @close="close" />
     </div>
 </template>
 <script>
 import Modal from '@/components/modal';
-import Button from '@/components/Button';
-import ImageSelector from '@/components/ImageSelector';
+import Button from '@/components/Button.vue';
+import ImageSelector from '@/components/ImageSelector.vue';
 
 export default {
     name: 'ModalExample',

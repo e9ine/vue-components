@@ -1,7 +1,6 @@
 <template>
     <div>
-        <apexchart class="bar-chart" :width="width" :height="height" type="bar" :options="chartOptions" :series="data.series">
-        </apexchart>
+        <apexchart class="bar-chart" :width="width" :height="height" type="bar" :options="chartOptions" :series="data.series" />
     </div>
 </template>
 
@@ -12,7 +11,7 @@ let defaultOptions = {
     },
     plotOptions: {
         bar: {
-            horizontal: true,
+            horizontal: true
         }
     },
     dataLabels: {
@@ -23,11 +22,14 @@ let defaultOptions = {
         offsetY: 8
     },
     xaxis: {
-        categories: [],
+        categories: []
     }
 };
 export default {
     name: 'Bar',
+    components: {
+        apexchart: () => import('vue-apexcharts')
+    },
     props: {
         title: {
             type: String
@@ -51,15 +53,12 @@ export default {
             default: null
         }
     },
-    components: {
-        apexchart: () => import('vue-apexcharts')
-    },
     computed: {
         chartOptions() {
             let chartOptions = this.$parent.populateChartOptions(defaultOptions);
             chartOptions.xaxis.categories = this.data.categories;
             return chartOptions;
         }
-    },
+    }
 };
 </script>

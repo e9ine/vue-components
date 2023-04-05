@@ -5,35 +5,44 @@
                 <div class="logo">
                     <img :src="brandLogoUrl" :style="{height: brandLogoHeight + 'px'}" alt />
                 </div>
-                <h1 class="title" :style="{color: textDarkColor}">{{ titleText }}</h1>
-                <h3 class="subtitle" :style="{color: textLightColor}">{{ subTitleText }}</h3>
+                <h1 class="title" :style="{color: textDarkColor}">
+                    {{ titleText }}
+                </h1>
+                <h3 class="subtitle" :style="{color: textLightColor}">
+                    {{ subTitleText }}
+                </h3>
                 <form class="login-form" @keyup.enter="() => onClickFn(username, password, errorMessage)">
                     <div class="form-group">
                         <label for="username" class="control-label" :style="{color: brandPrimary}">Username or Email</label>
-                        <input type="text" class="form-control" v-model="username" id="username" placeholder="john@doe.com" />
+                        <input id="username" v-model="username" type="text" class="form-control" placeholder="john@doe.com" />
                     </div>
                     <div class="form-group">
                         <label for="password" class="control-label" :style="{color: brandPrimary}">Password</label>
-                        <input type="password" class="form-control" v-model="password" id="password" placeholder="••••••••" />
+                        <input id="password" v-model="password" type="password" class="form-control" placeholder="••••••••" />
                     </div>
                     <div class="forgot-password">
                         <a :href="forgotPasswordLink" class="brand-primary bold" :style="{color: brandPrimary}">Forgot Password?</a>
                     </div>
-                    <p class="login-info" :v-if="errorMessage">{{ errorMessage }}</p>
+                    <p class="login-info" :v-if="errorMessage">
+                        {{ errorMessage }}
+                    </p>
                     <Button size="lg" :color="brandPrimary" text="Login" :action="() => onClickFn(username, password, errorMessage)" :async="true" :disabled="isNotProceedable()">
                         <i class="material-icons">https</i>
                     </Button>
                 </form>
             </div>
         </div>
-        <div class="right" :style="{'background-image': 'url(' + backgroundImage + ')'}"></div>
+        <div class="right" :style="{'background-image': 'url(' + backgroundImage + ')'}" />
     </div>
 </template>
 
 <script>
-import Button from '../../../components/Button';
+import Button from '../../../components/Button.vue';
 export default {
     name: 'LoginVariation1',
+    components: {
+        Button
+    },
     props: {
         brandPrimary: {
             type: String,
@@ -82,9 +91,6 @@ export default {
             type: String,
             default: 'https://www.google.com'
         }
-    },
-    components: {
-        Button
     },
     data() {
         return {

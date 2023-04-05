@@ -1,26 +1,28 @@
 <template>
-    <div class="sidebar" :class="[compact?'sidebar-compact':'',primary?'sidebar-primary':'']">
+    <div class="sidebar" :class="[compact ? 'sidebar-compact' : '', primary ? 'sidebar-primary' : '']">
         <div class="sidebar-top">
-            <slot name="sidebarTop"></slot>
+            <slot name="sidebarTop" />
         </div>
         <div class="sidebar-navigation">
-            <div v-for="(item,index) in menu" :key="index" class="menu-section">
-                <h6 class="menu-title" v-if="item.menuTitle">{{ item.menuTitle }}</h6>
+            <div v-for="(item, index) in menu" :key="index" class="menu-section">
+                <h6 v-if="item.menuTitle" class="menu-title">
+                    {{ item.menuTitle }}
+                </h6>
                 <ul class="menu">
-                    <li v-for="(route, key) in item.menuItems" :key="key" :class="{'has-dropdown':route.subItems && route.subItems.length>0}"> 
+                    <li v-for="(route, key) in item.menuItems" :key="key" :class="{'has-dropdown': route.subItems && route.subItems.length > 0}">
                         <router-link v-if="!route.subItems" :to="route.path" active-class="active" @click.native="toggleSidebar">
-                            <i class="material-icons" v-if="route.icon">{{ route.icon }}</i>
-                            <span v-text="route.name"></span>
+                            <i v-if="route.icon" class="material-icons">{{ route.icon }}</i>
+                            <span v-text="route.name" />
                         </router-link>
                         <a v-else @click="expandNav(route)">
-                            <i class="material-icons" v-if="route.icon">{{ route.icon }}</i>
-                            <span v-text="route.name"></span>
-                            <i class="material-icons toggle-sub-nav" v-if="route.subItems && route.subItems.length>0">keyboard_arrow_down</i>
+                            <i v-if="route.icon" class="material-icons">{{ route.icon }}</i>
+                            <span v-text="route.name" />
+                            <i v-if="route.subItems && route.subItems.length > 0" class="material-icons toggle-sub-nav">keyboard_arrow_down</i>
                         </a>
-                        <ul class="sub-nav" v-if="route.subItems && route.expanded" :class="{open: route.expanded}">
+                        <ul v-if="route.subItems && route.expanded" class="sub-nav" :class="{open: route.expanded}">
                             <li>
-                                <router-link :to="subRoute.path" active-class="active" v-for="(subRoute, subKey) in route.subItems" :key="subKey" @click.native="toggleSidebar">
-                                    <span v-text="subRoute.name"></span>
+                                <router-link v-for="(subRoute, subKey) in route.subItems" :key="subKey" :to="subRoute.path" active-class="active" @click.native="toggleSidebar">
+                                    <span v-text="subRoute.name" />
                                 </router-link>
                             </li>
                         </ul>
@@ -29,13 +31,12 @@
             </div>
         </div>
         <div class="sidebar-bottom">
-            <slot name="sidebarBottom"></slot>
+            <slot name="sidebarBottom" />
         </div>
     </div>
 </template>
 
 <script>
-
 export default {
     name: 'SideBar',
     props: {
@@ -47,17 +48,9 @@ export default {
             type: Boolean,
             default: false
         },
-        menu:{
-            type:Array,
-            required:true
-        }
-    },
-    methods: {
-        expandNav(route) {
-            route.expanded = !route.expanded;
-        },
-        toggleSidebar(){
-            this.$parent.$emit('toggle-sidebar');
+        menu: {
+            type: Array,
+            required: true
         }
     },
     created() {
@@ -67,6 +60,14 @@ export default {
         }
         if (err) {
             throw new Error(err);
+        }
+    },
+    methods: {
+        expandNav(route) {
+            route.expanded = !route.expanded;
+        },
+        toggleSidebar() {
+            this.$parent.$emit('toggle-sidebar');
         }
     }
 };

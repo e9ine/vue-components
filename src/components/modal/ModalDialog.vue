@@ -3,20 +3,22 @@
         <div class="modal-mask" :class="centered ? 'centered' : ''">
             <div class="modal-wrapper" :class="'modal-' + size">
                 <div class="modal-container">
-                    <slot v-if="$slots.header" name="header"></slot>
+                    <slot v-if="$slots.header" name="header" />
                     <div v-else>
                         <div class="modal-header">
                             <h4>
-                                <slot name="title">Modal Title</slot>
+                                <slot name="title">
+                                    Modal Title
+                                </slot>
                             </h4>
-                            <a href="" class="modal-close" @click.prevent="close"><img src="@e9ine/vue_components/src/assets/close-dark.svg" alt="" /></a>
+                            <a href="" class="modal-close" @click.prevent="close"><img src="../../assets/close-dark.svg?url" alt=""/></a>
                         </div>
                     </div>
                     <div class="modal-body">
-                        <slot name="body"></slot>
+                        <slot name="body" />
                     </div>
-                    <div class="modal-footer" v-if="$slots.footer">
-                        <slot name="footer"> </slot>
+                    <div v-if="$slots.footer" class="modal-footer">
+                        <slot name="footer" />
                     </div>
                 </div>
             </div>
@@ -37,13 +39,13 @@ export default {
             default: false
         }
     },
+    mounted() {
+        this.$emit('opened');
+    },
     methods: {
         close() {
             this.$emit('closed');
         }
-    },
-    mounted() {
-        this.$emit('opened');
     }
 };
 </script>

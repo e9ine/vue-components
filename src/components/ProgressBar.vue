@@ -1,6 +1,6 @@
 <template>
-    <div class="progress-bar" :style="{height:height+'px'}">
-        <div class="value" :style="style" ref="progress-bar-value"></div>
+    <div class="progress-bar" :style="{height: height + 'px'}">
+        <div ref="progress-bar-value" class="value" :style="style" />
     </div>
 </template>
 
@@ -13,12 +13,12 @@ export default {
         value: {
             type: Number
         },
-        color:{
-            type:String,
+        color: {
+            type: String,
             default: '#7ED321'
         },
-        height:{
-            type:Number,
+        height: {
+            type: Number,
             default: 10
         }
     },
@@ -31,13 +31,13 @@ export default {
         style() {
             let obj = {};
             obj['background-color'] = checkValidHex(this.color);
-            obj['height'] = this.height+'px';
+            obj['height'] = this.height + 'px';
             return obj;
         }
     },
-    mounted () {
+    mounted() {
         setTimeout(() => {
-            this.$refs['progress-bar-value'].style.width=this.value+'%';
+            this.$refs['progress-bar-value'].style.width = this.value + '%';
         }, 0);
     }
 };
