@@ -11,7 +11,7 @@ export {default as Badge} from './components/Badge.vue';
 export {default as Breadcrumbs} from './components/Breadcrumbs.vue';
 export {default as Button} from './components/Button.vue';
 export {default as Card} from './components/Card.vue';
-export {default as Chart} from './components/charts';
+export {default as Chart} from './components/charts/index.vue';
 export {default as Chip} from './components/Chip.vue';
 export {default as ColorPicker} from './components/ColorPicker.vue';
 export {default as Datepicker} from './components/Datepicker.vue';
