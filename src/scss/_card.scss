@@ -29,7 +29,6 @@
                     white-space: nowrap;
                     overflow: hidden;
                     text-overflow: ellipsis;
-
                 }
             }
         }
@@ -98,11 +97,10 @@
                 background-color: $white;
                 flex-direction: column;
                 width: auto;
-                right: $card-spacer+2rem;
-                top:$card-spacer;
+                right: $card-spacer + 2rem;
+                top: $card-spacer;
                 border-radius: $card-border-radius;
                 box-shadow: $box-shadow;
-
             }
         }
     }
@@ -112,7 +110,7 @@
     .card {
         &-container {
             .card-info {
-                padding: $card-spacer/2;
+                padding: calc($card-spacer / 2);
             }
         }
     }

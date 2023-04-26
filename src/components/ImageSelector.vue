@@ -1,20 +1,20 @@
 <template>
-    <Modal :size="size" v-model="showModal" @cancel="cancel" hide-footer :primary="$attrs.primary">
-        <template v-slot:title>
+    <Modal v-model="showModal" :size="size" hide-footer :primary="$attrs.primary" @cancel="cancel">
+        <template #title>
             Select &amp; Crop Image
         </template>
-        <template v-slot:body>
+        <template #body>
             <p>Please choose an image and crop the section you would like to upload.</p>
             <div class="mt16">
                 <h5>1. Choose File</h5>
-                <input type="file" @change="fileUploaded" accept="image/*" ref="fileUpload" id="file-upload" />
+                <input id="file-upload" ref="fileUpload" type="file" accept="image/*" @change="fileUploaded" />
                 <label for="file-upload" class="custom-file-upload">
                     <span class="btn btn-sm btn-primary">Choose file</span><span>{{ upload.chosen ? upload.chosen.name : 'No file chosen' }}</span>
                 </label>
             </div>
             <div v-if="upload.src" class="mt16">
                 <h5>2. Crop Image</h5>
-                <cropper classname="cropper" :src="upload.src" :stencil-props="stencilProps" @change="onChange" ref="cropper"></cropper>
+                <cropper ref="cropper" classname="cropper" :src="upload.src" :stencil-props="stencilProps" @change="onChange" />
             </div>
             <div v-if="upload.src" class="upload-actions mt16">
                 <h5>3. Confirm</h5>
@@ -32,10 +32,19 @@
 <script>
 import {Cropper} from 'vue-advanced-cropper';
 import Modal from './modal';
-import Button from './Button';
+import Button from './Button.vue';
 
 export default {
     name: 'ImageSelector',
+    components: {
+        Cropper,
+        Modal,
+        Button
+    },
+    model: {
+        prop: 'show',
+        event: 'cancel'
+    },
     props: {
         show: {
             type: Boolean
@@ -54,15 +63,6 @@ export default {
                 };
             }
         }
-    },
-    components: {
-        Cropper,
-        Modal,
-        Button
-    },
-    model: {
-        prop: 'show',
-        event: 'cancel'
     },
     data() {
         return {
@@ -86,6 +86,14 @@ export default {
             isValid: false,
             showCropper: true
         };
+    },
+    watch: {
+        show: function(newVal) {
+            this.showModal = newVal;
+        }
+    },
+    mounted() {
+        this.showModal = this.show;
     },
     methods: {
         close(image, cropInfo, src) {
@@ -158,14 +166,6 @@ export default {
                 console.error(err);
             }
         }
-    },
-    watch: {
-        show: function(newVal) {
-            this.showModal = newVal;
-        }
-    },
-    mounted() {
-        this.showModal = this.show;
     }
 };
 </script>

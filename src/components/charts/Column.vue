@@ -1,7 +1,6 @@
 <template>
     <div>
-        <apexchart class="column-chart" :width="width" :height="height" type="bar" :options="chartOptions" :series="data.series">
-        </apexchart>
+        <apexchart class="column-chart" :width="width" :height="height" type="bar" :options="chartOptions" :series="data.series" />
     </div>
 </template>
 
@@ -11,7 +10,7 @@ let defaultOptions = {
         type: 'column-chart'
     },
     xaxis: {
-        categories: [],
+        categories: []
     },
     dataLabels: {
         enabled: false
@@ -23,6 +22,9 @@ let defaultOptions = {
 };
 export default {
     name: 'Column',
+    components: {
+        apexchart: () => import('vue-apexcharts')
+    },
     props: {
         tite: {
             type: String
@@ -46,9 +48,6 @@ export default {
             default: null
         }
     },
-    components: {
-        apexchart: () => import('vue-apexcharts')
-    },
     computed: {
         chartOptions() {
             let chartOptions = this.$parent.populateChartOptions(defaultOptions);
@@ -56,10 +55,8 @@ export default {
             return chartOptions;
         }
     },
-    created() {
-    },
+    created() {}
 };
 </script>
 
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>

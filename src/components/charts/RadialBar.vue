@@ -1,8 +1,6 @@
-
 <template>
     <div>
-        <apexchart class="pie-chart" :width="width" :height="height" type="radialBar" :options="chartOptions" :series="data.series">
-        </apexchart>
+        <apexchart class="pie-chart" :width="width" :height="height" type="radialBar" :options="chartOptions" :series="data.series" />
     </div>
 </template>
 
@@ -23,6 +21,9 @@ let defaultOptions = {
 };
 export default {
     name: 'RadialBar',
+    components: {
+        apexchart: () => import('vue-apexcharts')
+    },
     props: {
         tite: {
             type: String
@@ -46,9 +47,6 @@ export default {
             default: null
         }
     },
-    components: {
-        apexchart: () => import('vue-apexcharts')
-    },
     computed: {
         chartOptions() {
             let chartOptions = this.$parent.populateChartOptions(defaultOptions);
@@ -56,10 +54,8 @@ export default {
             return chartOptions;
         }
     },
-    created() {
-    },
+    created() {}
 };
 </script>
 
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>

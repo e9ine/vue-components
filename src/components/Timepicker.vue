@@ -7,28 +7,28 @@
                         <td>
                             <label class="control-label">Hrs</label>
                         </td>
-                        <td></td>
+                        <td />
                         <td>
                             <label class="control-label">Mins</label>
                         </td>
-                        <td v-show="showSeconds"></td>
+                        <td v-show="showSeconds" />
                         <td v-show="showSeconds">
                             <label class="control-label">Secs</label>
                         </td>
-                        <td v-show="showMeridian"></td>
+                        <td v-show="showMeridian" />
                     </tr>
                     <tr>
                         <td class="form-element">
                             <input
+                                ref="hours"
                                 type="number"
-                                @input="handleHours($event.target.value)"
                                 :value="strHours"
                                 class="form-control"
-                                @keyup.up="incrementHours"
-                                @keyup.down="decrementHours"
                                 :min="showMeridian ? 1 : 0"
                                 :max="showMeridian ? 12 : 23"
-                                ref="hours"
+                                @input="handleHours($event.target.value)"
+                                @keyup.up="incrementHours"
+                                @keyup.down="decrementHours"
                             />
                             <div class="timepicker-arrows">
                                 <a @click="incrementHours"><i class="material-icons">keyboard_arrow_up</i></a
@@ -38,33 +38,35 @@
                         <td><span class="timepicker-delimiter">:</span></td>
                         <td class="form-element">
                             <input
+                                ref="minutes"
                                 type="number"
-                                @input="handleMinutes($event.target.value)"
                                 :value="strMinutes"
                                 class="form-control"
-                                @keyup.up="incrementMinutes"
-                                @keyup.down="decrementMinutes"
                                 min="0"
                                 max="59"
-                                ref="minutes"
+                                @input="handleMinutes($event.target.value)"
+                                @keyup.up="incrementMinutes"
+                                @keyup.down="decrementMinutes"
                             />
                             <div class="timepicker-arrows">
                                 <a @click="incrementMinutes"><i class="material-icons">keyboard_arrow_up</i></a
                                 ><a @click="decrementMinutes"><i class="material-icons">keyboard_arrow_down</i></a>
                             </div>
                         </td>
-                        <td v-show="showSeconds"><span class="timepicker-delimiter">:</span></td>
-                        <td class="form-element" v-show="showSeconds">
+                        <td v-show="showSeconds">
+                            <span class="timepicker-delimiter">:</span>
+                        </td>
+                        <td v-show="showSeconds" class="form-element">
                             <input
+                                ref="seconds"
                                 type="number"
-                                @input="handleSeconds($event.target.value)"
                                 :value="strSeconds"
                                 class="form-control"
-                                @keyup.up="incrementSeconds"
-                                @keyup.down="decrementSeconds"
                                 min="0"
                                 max="59"
-                                ref="seconds"
+                                @input="handleSeconds($event.target.value)"
+                                @keyup.up="incrementSeconds"
+                                @keyup.down="decrementSeconds"
                             />
                             <div class="timepicker-arrows">
                                 <a @click="incrementSeconds"><i class="material-icons">keyboard_arrow_up</i></a
@@ -73,7 +75,7 @@
                         </td>
                         <td v-show="showMeridian">
                             <div class="timepicker-meridian">
-                                <a @click="toggleMeridian" :class="{active: meridian == 'AM'}">AM</a><a @click="toggleMeridian" :class="{active: meridian == 'PM'}">PM</a>
+                                <a :class="{active: meridian == 'AM'}" @click="toggleMeridian">AM</a><a :class="{active: meridian == 'PM'}" @click="toggleMeridian">PM</a>
                             </div>
                         </td>
                     </tr>
@@ -120,6 +122,19 @@ export default {
             meridian: 'AM'
         };
     },
+    created() {
+        if (this.showMeridian) {
+            if (this.hours >= 12) {
+                this.meridian = 'PM';
+                if (this.hours > 12) this.hours -= 12;
+            } else if (this.hours === 0) {
+                this.hours = 12;
+            }
+        }
+        this.handleHours(this.hours);
+        this.handleMinutes(this.minutes);
+        if (this.showSeconds) this.handleSeconds(this.seconds);
+    },
     methods: {
         emitValue(type) {
             let clonedValue = this.value;
@@ -127,7 +142,7 @@ export default {
                 let hours = this.hours;
                 if (this.showMeridian) {
                     if (this.meridian === 'PM' && this.hours < 12) hours += 12;
-                    else if (this.meridian === 'AM' && this.hours == 12) hours = 0;
+                    else if (this.meridian === 'AM' && this.hours === 12) hours = 0;
                 }
                 clonedValue.setHours(hours);
             } else if (type === 'min') clonedValue.setMinutes(this.minutes);
@@ -137,8 +152,8 @@ export default {
             this.$emit('changed', clonedValue);
         },
         handleHours(val, type) {
-            let min = this.showMeridian ? 1 : 0,
-                max = this.showMeridian ? 12 : 23;
+            let min = this.showMeridian ? 1 : 0;
+            let max = this.showMeridian ? 12 : 23;
             let h = parseInt(val);
             if (Number.isNaN(h)) return;
 
@@ -160,8 +175,8 @@ export default {
             this.emitValue('hr');
         },
         handleMinutes(val, type) {
-            let min = 0,
-                max = 59;
+            let min = 0;
+            let max = 59;
             let m = parseInt(val);
             if (Number.isNaN(m)) return;
             if (type === 'inc') m = m + this.minuteStep;
@@ -181,8 +196,8 @@ export default {
             this.emitValue('min');
         },
         handleSeconds(val, type) {
-            let min = 0,
-                max = 59;
+            let min = 0;
+            let max = 59;
             let s = parseInt(val);
             if (Number.isNaN(s)) return;
             if (type === 'inc') s = s + this.secondStep;
@@ -228,19 +243,6 @@ export default {
                 this.handleHours(this.hours);
             }
         }
-    },
-    created() {
-        if (this.showMeridian) {
-            if (this.hours >= 12) {
-                this.meridian = 'PM';
-                if (this.hours > 12) this.hours -= 12;
-            } else if (this.hours == 0) {
-                this.hours = 12;
-            }
-        }
-        this.handleHours(this.hours);
-        this.handleMinutes(this.minutes);
-        if (this.showSeconds) this.handleSeconds(this.seconds);
     }
 };
 </script>

@@ -10,13 +10,13 @@ export default {
     props: {
         lines: {
             type: Number,
-            default: 4,
-        },
+            default: 4
+        }
     },
-    data () {
+    data() {
         return {
-            className: 'shimmer-text',
+            className: 'shimmer-text'
         };
-    },
+    }
 };
 </script>

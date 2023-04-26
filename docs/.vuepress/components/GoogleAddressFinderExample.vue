@@ -7,17 +7,12 @@
 
 <script>
 import Vue from 'vue';
-import * as VueGoogleMaps from 'vue2-google-maps';
-
-Vue.use(VueGoogleMaps, {
-    load: {
-        key: process.env.VUE_APP_GOOGLE_KEY,
-        libraries: 'places'
-    },
-    installComponents: false
-});
+import AddressFinder from '@/components/address-finder/Component.vue';
 export default {
     name: 'GoogleAddressFinderExample',
+    components: {
+        AddressFinder
+    },
     data() {
         return {
             address: {},

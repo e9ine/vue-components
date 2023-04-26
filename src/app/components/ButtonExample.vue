@@ -4,116 +4,120 @@
         <div class="buttons">
             <div class="buttons-info">
                 <label>Large</label>
-                <Button size="lg" type="secondary" text="lg" :action="buttonClicked"></Button>
+                <Button size="lg" type="secondary" text="lg" :action="buttonClicked" />
             </div>
             <div class="buttons-info">
                 <label>Medium</label>
-                <Button size="md" type="secondary" text="md" :action="buttonClicked"></Button>
+                <Button size="md" type="secondary" text="md" :action="buttonClicked" />
             </div>
             <div class="buttons-info">
                 <label>Small</label>
-                <Button size="sm" type="secondary" text="sm" :action="buttonClicked"></Button>
+                <Button size="sm" type="secondary" text="sm" :action="buttonClicked" />
             </div>
             <div class="buttons-info">
                 <label>x-small</label>
-                <Button size="xs" type="secondary" text="xs" :action="buttonClicked"></Button>
+                <Button size="xs" type="secondary" text="xs" :action="buttonClicked" />
             </div>
         </div>
-        <div class="spacer-v"></div>
+        <div class="spacer-v" />
         <h5>Type variations</h5>
-        <h6 class="section-subtitle">Filled</h6>
+        <h6 class="section-subtitle">
+            Filled
+        </h6>
         <div class="buttons">
             <div class="buttons-info">
                 <label>Primary</label>
-                <Button size="md" type="red" text="Primary" :action="buttonClicked"></Button>
+                <Button size="md" type="red" text="Primary" :action="buttonClicked" />
             </div>
             <div class="buttons-info">
                 <label>Secondary</label>
-                <Button size="md" type="secondary" text="Secondary" :action="buttonClicked"></Button>
+                <Button size="md" type="secondary" text="Secondary" :action="buttonClicked" />
             </div>
             <div class="buttons-info">
                 <label>Tertiary</label>
-                <Button size="md" type="tertiary" text="Tertiary" :action="buttonClicked"></Button>
+                <Button size="md" type="tertiary" text="Tertiary" :action="buttonClicked" />
             </div>
             <div class="buttons-info">
                 <label>Success</label>
-                <Button size="md" type="success" text="Success" :action="buttonClicked"></Button>
+                <Button size="md" type="success" text="Success" :action="buttonClicked" />
             </div>
             <div class="buttons-info">
                 <label>Warning</label>
-                <Button size="md" type="warning" text="Warning"></Button>
+                <Button size="md" type="warning" text="Warning" />
             </div>
             <div class="buttons-info">
                 <label>Info</label>
-                <Button size="md" type="info" text="Info" :action="buttonClicked"></Button>
+                <Button size="md" type="info" text="Info" :action="buttonClicked" />
             </div>
             <div class="buttons-info">
                 <label>Danger</label>
-                <Button size="md" type="danger" text="Danger" :action="buttonClicked"></Button>
+                <Button size="md" type="danger" text="Danger" :action="buttonClicked" />
             </div>
             <div class="buttons-info">
                 <label>Danger</label>
-                <Button size="md" type="dark" text="Dark" :action="buttonClicked"></Button>
+                <Button size="md" type="dark" text="Dark" :action="buttonClicked" />
             </div>
             <div class="buttons-info">
                 <label>Light</label>
-                <Button size="md" type="light" text="Light" :action="buttonClicked"></Button>
+                <Button size="md" type="light" text="Light" :action="buttonClicked" />
             </div>
         </div>
-        <div class="spacer-v"></div>
-        <h6 class="section-subtitle">Bordered</h6>
+        <div class="spacer-v" />
+        <h6 class="section-subtitle">
+            Bordered
+        </h6>
         <div class="buttons">
             <div class="buttons-info">
                 <label>Primary</label>
-                <Button size="md" type="border-primary" text="Primary" :action="buttonClicked"></Button>
+                <Button size="md" type="border-primary" text="Primary" :action="buttonClicked" />
             </div>
             <div class="buttons-info">
                 <label>Secondary</label>
-                <Button size="md" type="border-secondary" text="Secondary" :action="buttonClicked"></Button>
+                <Button size="md" type="border-secondary" text="Secondary" :action="buttonClicked" />
             </div>
             <div class="buttons-info">
                 <label>Tertiary</label>
-                <Button size="md" type="border-tertiary" text="Tertiary" :action="buttonClicked"></Button>
+                <Button size="md" type="border-tertiary" text="Tertiary" :action="buttonClicked" />
             </div>
             <div class="buttons-info">
                 <label>Success</label>
-                <Button size="md" type="border-success" text="Success" :action="buttonClicked"></Button>
+                <Button size="md" type="border-success" text="Success" :action="buttonClicked" />
             </div>
             <div class="buttons-info">
                 <label>Warning</label>
-                <Button size="md" type="border-warning" text="Warning" :action="buttonClicked"></Button>
+                <Button size="md" type="border-warning" text="Warning" :action="buttonClicked" />
             </div>
             <div class="buttons-info">
                 <label>Info</label>
-                <Button size="md" type="border-info" text="Info" :action="buttonClicked"></Button>
+                <Button size="md" type="border-info" text="Info" :action="buttonClicked" />
             </div>
             <div class="buttons-info">
                 <label>Danger</label>
-                <Button size="md" type="border-danger" text="Danger" :action="buttonClicked"></Button>
+                <Button size="md" type="border-danger" text="Danger" :action="buttonClicked" />
             </div>
             <div class="buttons-info">
                 <label>Danger</label>
-                <Button size="md" type="border-dark" text="Dark" :action="buttonClicked"></Button>
+                <Button size="md" type="border-dark" text="Dark" :action="buttonClicked" />
             </div>
             <div class="buttons-info">
                 <label>Light</label>
-                <Button size="md" type="border-light" text="Light" :action="buttonClicked"></Button>
+                <Button size="md" type="border-light" text="Light" :action="buttonClicked" />
             </div>
         </div>
-        <div class="spacer-v"></div>
+        <div class="spacer-v" />
         <h5>Other variations</h5>
         <div class="buttons">
             <div class="buttons-info">
                 <label>Loader</label>
-                <Button size="md" type="primary" text="Click to load" :async="true" :action="callAsyncApi"></Button>
+                <Button size="md" type="primary" text="Click to load" :async="true" :action="callAsyncApi" />
             </div>
             <div class="buttons-info">
                 <label>Loader with Text</label>
-                <Button size="md" type="success" text="Click to load" :async="true" :action="callAsyncApi" loader-text="Loading..."></Button>
+                <Button size="md" type="success" text="Click to load" :async="true" :action="callAsyncApi" loader-text="Loading..." />
             </div>
             <div class="buttons-info">
                 <label>Disabled</label>
-                <Button size="md" type="warning" text="Click if you can" :action="buttonClicked" disabled></Button>
+                <Button size="md" type="warning" text="Click if you can" :action="buttonClicked" disabled />
             </div>
             <div class="buttons-info">
                 <label>Icon</label>
@@ -123,7 +127,7 @@
             </div>
             <div class="buttons-info">
                 <label>Async. Action</label>
-                <Button size="md" type="tertiary" text="Fetch Data" :async="true" :action="callAsyncApi"></Button>
+                <Button size="md" type="tertiary" text="Fetch Data" :async="true" :action="callAsyncApi" />
             </div>
         </div>
     </div>
@@ -131,20 +135,19 @@
 
 <script>
 import axios from 'axios';
-import Button from '@/components/Button';
-
+import Button from '@/components/Button.vue';
 
 export default {
     name: 'ButtonExample',
     components: {
-        Button,
+        Button
     },
     methods: {
         async callAsyncApi() {
             try {
                 let result = await axios.get('http://slowwly.robertomurray.co.uk/delay/3000/url/https://jsonplaceholder.typicode.com/todos/1');
                 alert(JSON.stringify(result.data));
-            } catch(e) {
+            } catch (e) {
                 console.log('Handle Error');
             }
         },
@@ -156,15 +159,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-    .buttons {
-        &-info {
-            display: inline-grid;
-            margin: 0 16px 16px 0;
-            label {
-                display: block;
-                color:$grey;
-                margin-bottom: 8px;
-            }
+.buttons {
+    &-info {
+        display: inline-grid;
+        margin: 0 16px 16px 0;
+        label {
+            display: block;
+            color: $grey;
+            margin-bottom: 8px;
         }
     }
+}
 </style>

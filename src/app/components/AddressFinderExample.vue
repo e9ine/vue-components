@@ -2,13 +2,13 @@
     <div class="row">
         <div class="col-sm-4">
             <h4>Address Finder</h4>
-            <address-finder :address.sync="address" :options="options" :local-addresses="localAddresses" type="Google" @updated="addressChanged" v-if="options.google"></address-finder>
+            <address-finder v-if="options.google" :address.sync="address" :options="options" :local-addresses="localAddresses" type="Google" @updated="addressChanged" />
         </div>
     </div>
 </template>
 
 <script>
-import AddressFinder from '@/components/address-finder/Component';
+import AddressFinder from '@/components/address-finder/Component.vue';
 
 export default {
     name: 'AddressFinderExample',
@@ -53,13 +53,13 @@ export default {
             newAddress: {}
         };
     },
+    async created() {
+        this.options.google = await this.$gmapApiPromiseLazy();
+    },
     methods: {
         addressChanged(data) {
             this.newAddress = data;
         }
-    },
-    async created() {
-        this.options.google = await this.$gmapApiPromiseLazy();
     }
 };
 </script>

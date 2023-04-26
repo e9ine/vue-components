@@ -1,6 +1,6 @@
 <template>
     <div class="table-wrapper">
-        <div class="table-options" v-if="options">
+        <div v-if="options" class="table-options">
             <a v-show="options.export" @click="exportData">
                 Export
             </a>
@@ -13,40 +13,40 @@
         </div>
         <div class="table-responsive">
             <table
+                v-if="clonedHeadings"
                 :class="[tableClass]"
                 :style="{'border-spacing': '0px ' + ($attrs.hasOwnProperty('spacing') ? $attrs.spacing + 'px' : '0px'), 'border-collapse': 'separate', 'min-width': minWidth + 'px'}"
-                v-if="clonedHeadings"
             >
                 <thead :class="[theadClass]">
                     <tr>
                         <th v-for="(header, hKey) in clonedHeadings" :key="hKey" :class="[theadThClass, typeof header.class == 'string' ? header.class : '']">
                             <span v-if="$scopedSlots[header.key + '(head)']">
-                                <slot :name="header.key + '(head)'"></slot>
+                                <slot :name="header.key + '(head)'" />
                             </span>
                             <div v-else>
                                 {{ header.label || header.key || '' }}
-                                <span class="sort" v-if="sortBy[header.key]">
+                                <span v-if="sortBy[header.key]" class="sort">
                                     <i class="material-icons" :class="{active: currentSort && currentSort.name === header.key && currentSort.value === 'asc'}" @click="changeSort(header.key, 'asc')"
-                                    >arrow_drop_up</i
+                                        >arrow_drop_up</i
                                     >
                                     <i class="material-icons" :class="{active: currentSort && currentSort.name === header.key && currentSort.value === 'desc'}" @click="changeSort(header.key, 'desc')"
-                                    >arrow_drop_down</i
+                                        >arrow_drop_down</i
                                     >
                                 </span>
                             </div>
                         </th>
-                        <th v-if="isExpandable"></th>
+                        <th v-if="isExpandable" />
                     </tr>
-                    <tr class="linear-activity" v-show="isLoading">
-                        <td class="indeterminate" :colspan="isExpandable ? clonedHeadings.length + 1 : clonedHeadings.length"></td>
+                    <tr v-show="isLoading" class="linear-activity">
+                        <td class="indeterminate" :colspan="isExpandable ? clonedHeadings.length + 1 : clonedHeadings.length" />
                     </tr>
                 </thead>
                 <tbody v-if="clonedItems.length">
                     <template v-for="(row, key) in clonedItems">
-                        <tr :key="key" @click="actionWrapper(row)" :class="tbodyTrClass">
+                        <tr :key="key" :class="tbodyTrClass" @click="actionWrapper(row)">
                             <td v-for="(header, hKey) in clonedHeadings" :key="hKey" :class="setTdClasses(header, row)">
                                 <span v-if="$scopedSlots[header.key]">
-                                    <slot :name="header.key" :value="row"></slot>
+                                    <slot :name="header.key" :value="row" />
                                 </span>
                                 <span v-else>
                                     {{ header.formatter ? header.formatter(row[header.key]) : row[header.key] }}
@@ -54,27 +54,27 @@
                             </td>
                             <td v-if="isExpandable" class="text-right" :class="setTdClasses('', row)">
                                 <div class="row-expand-btn">
-                                    <span @click="expand(row, key)" :class="[row.$expanded ? 'expanded' : '']" class="material-icons">expand_more</span>
+                                    <span :class="[row.$expanded ? 'expanded' : '']" class="material-icons" @click="expand(row, key)">expand_more</span>
                                 </div>
                             </td>
                         </tr>
-                        <tr :key="key + '-expanded'" v-if="row.$expanded">
+                        <tr v-if="row.$expanded" :key="key + '-expanded'">
                             <td :colspan="clonedHeadings.length + 1">
-                                <slot name="expanded-area" :data="{row, key}"> </slot>
+                                <slot name="expanded-area" :data="{row, key}" />
                             </td>
                         </tr>
                     </template>
-                    <tr v-if="isLoading" class="overlay"></tr>
+                    <tr v-if="isLoading" class="overlay" />
                 </tbody>
                 <div v-else-if="$slots.empty" v-show="!isLoading">
-                    <slot name="empty"></slot>
+                    <slot name="empty" />
                 </div>
-                <div class="empty" v-else v-show="!isLoading">
+                <div v-else v-show="!isLoading" class="empty">
                     <p>There are currently no items to show.</p>
                 </div>
             </table>
         </div>
-        <div class="pagination" v-if="pagination">
+        <div v-if="pagination" class="pagination">
             <p>
                 Showing {{ (pagination.currentPage - 1) * pagination.perPage + 1 }} - {{ Math.min(...[pagination.currentPage * pagination.perPage, pagination.totalItems]) }} of
                 {{ pagination.totalItems }} results.
@@ -99,22 +99,26 @@
                 </li>
             </ul>
         </div>
-        <div class="arrange" v-if="isArrange">
-            <div class="arrange__overlay"></div>
+        <div v-if="isArrange" class="arrange">
+            <div class="arrange__overlay" />
             <div class="arrange__box">
-                <h6 class="arrange__box__title">Arrange Columns</h6>
+                <h6 class="arrange__box__title">
+                    Arrange Columns
+                </h6>
                 <div class="arrange__box__body">
-                    <div class="arrange__box__body__option" v-for="(prop, key) in tempHeadings" :key="key">
-                        <div class="arrange__box__body__option__name">{{ prop.label || prop.key }}</div>
+                    <div v-for="(prop, key) in tempHeadings" :key="key" class="arrange__box__body__option">
+                        <div class="arrange__box__body__option__name">
+                            {{ prop.label || prop.key }}
+                        </div>
                         <div class="arrange__box__body__option__value">
                             <label :for="prop.key" class="checkbox">
-                                <input :id="prop.key" type="checkbox" v-model="prop.selected" />
-                                <span class="checkmark"></span>
+                                <input :id="prop.key" v-model="prop.selected" type="checkbox" />
+                                <span class="checkmark" />
                             </label>
                         </div>
                     </div>
                     <div class="text-center">
-                        <Button type="success" size="sm" :action="saveColumns" text="Save"></Button>
+                        <Button type="success" size="sm" :action="saveColumns" text="Save" />
                     </div>
                 </div>
             </div>
@@ -123,9 +127,12 @@
 </template>
 
 <script>
-import Button from './Button';
+import Button from './Button.vue';
 export default {
     name: 'Table',
+    components: {
+        Button
+    },
     props: {
         filters: {},
         headings: {
@@ -170,9 +177,6 @@ export default {
             type: Object
         }
     },
-    components: {
-        Button
-    },
     data() {
         return {
             clonedItems: [],
@@ -188,6 +192,76 @@ export default {
             isArrange: false,
             isLoading: false
         };
+    },
+    computed: {
+        totalPages() {
+            let threshold = this.pagination.threshold ? Math.ceil(this.pagination.threshold) : 2;
+            let total = Math.ceil(this.pagination.totalItems / this.pagination.perPage);
+            let pages = new Set();
+            let counter = this.pagination.currentPage;
+            while (counter >= 1 && this.pagination.currentPage - counter <= threshold / 2) {
+                pages.add(counter);
+                counter--;
+            }
+            counter = this.pagination.currentPage;
+            while (counter <= total && counter - this.pagination.currentPage <= threshold / 2) {
+                pages.add(counter);
+                counter++;
+            }
+            return Array.from(pages).sort();
+        }
+    },
+    watch: {
+        filters: {
+            handler() {
+                this.pagination.currentPage = 1;
+                this.callAPI();
+            },
+            deep: true
+        },
+        items: {
+            handler(newValue) {
+                if (!this.isAPI) {
+                    this.sortedItems = newValue;
+                    if (this.pagination) this.changePage(1);
+                }
+            },
+            deep: true
+        }
+    },
+    async created() {
+        // Initialise the sorts
+        let err = this.validateAllProps();
+        if (err) {
+            console.error(err);
+        }
+        for (let key in this.clonedHeadings) {
+            if (this.clonedHeadings[key].sortable) {
+                this.sortBy[this.clonedHeadings[key].key] = true;
+            }
+        }
+        if (Array.isArray(this.items)) {
+            this.isAPI = false;
+            if (this.pagination) this.pagination.totalItems = this.items.length;
+        }
+        if (this.sort && this.sort.name) {
+            this.changeSort(this.sort.name, this.sort.value);
+        } else {
+            if (!this.isAPI) {
+                this.sortedItems = [
+                    ...this.items.map((item) => {
+                        return {...item};
+                    })
+                ];
+                if (this.pagination) {
+                    this.clonedItems = this.sortedItems.slice((this.pagination.currentPage - 1) * this.pagination.perPage, this.pagination.perPage);
+                } else {
+                    this.clonedItems = this.sortedItems;
+                }
+            } else {
+                this.callAPI();
+            }
+        }
     },
     methods: {
         actionWrapper(row) {
@@ -318,76 +392,6 @@ export default {
         expand(row, key) {
             this.$set(row, '$expanded', !row.$expanded);
             this.$emit('expanded', {row, key});
-        }
-    },
-    computed: {
-        totalPages() {
-            let threshold = this.pagination.threshold ? Math.ceil(this.pagination.threshold) : 2;
-            let total = Math.ceil(this.pagination.totalItems / this.pagination.perPage);
-            let pages = new Set();
-            let counter = this.pagination.currentPage;
-            while (counter >= 1 && this.pagination.currentPage - counter <= threshold / 2) {
-                pages.add(counter);
-                counter--;
-            }
-            counter = this.pagination.currentPage;
-            while (counter <= total && counter - this.pagination.currentPage <= threshold / 2) {
-                pages.add(counter);
-                counter++;
-            }
-            return Array.from(pages).sort();
-        }
-    },
-    watch: {
-        filters: {
-            handler() {
-                this.pagination.currentPage = 1;
-                this.callAPI();
-            },
-            deep: true
-        },
-        items: {
-            handler(newValue) {
-                if (!this.isAPI) {
-                    this.sortedItems = newValue;
-                    if (this.pagination) this.changePage(1);
-                }
-            },
-            deep: true
-        }
-    },
-    async created() {
-        // Initialise the sorts
-        let err = this.validateAllProps();
-        if (err) {
-            console.error(err);
-        }
-        for (let key in this.clonedHeadings) {
-            if (this.clonedHeadings[key].sortable) {
-                this.sortBy[this.clonedHeadings[key].key] = true;
-            }
-        }
-        if (Array.isArray(this.items)) {
-            this.isAPI = false;
-            if (this.pagination) this.pagination.totalItems = this.items.length;
-        }
-        if (this.sort && this.sort.name) {
-            this.changeSort(this.sort.name, this.sort.value);
-        } else {
-            if (!this.isAPI) {
-                this.sortedItems = [
-                    ...this.items.map((item) => {
-                        return {...item};
-                    })
-                ];
-                if (this.pagination) {
-                    this.clonedItems = this.sortedItems.slice((this.pagination.currentPage - 1) * this.pagination.perPage, this.pagination.perPage);
-                } else {
-                    this.clonedItems = this.sortedItems;
-                }
-            } else {
-                this.callAPI();
-            }
         }
     }
 };

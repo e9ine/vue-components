@@ -10,27 +10,26 @@ export default {
     props: {
         rounded: {
             type: Boolean,
-            default: false,
+            default: false
         },
         centered: {
             type: Boolean,
-            default: false,
+            default: false
         },
         animated: {
             type: Boolean,
-            default: true,
-        },
+            default: true
+        }
     },
     computed: {
-        classObject () {
+        classObject() {
             return {
-                'shimmer': true,
+                shimmer: true,
                 'shimmer-is-rounded': this.rounded,
                 'shimmer-is-centered': this.centered,
-                'shimmer-is-animated': this.animated,
+                'shimmer-is-animated': this.animated
             };
-        },
-    },
+        }
+    }
 };
 </script>
-

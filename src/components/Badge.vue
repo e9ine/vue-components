@@ -1,13 +1,12 @@
 <template>
     <div class="badge-wrapper">
         <div class="badge-slot">
-            <slot></slot>
+            <slot />
         </div>
         <div class="badge" :style="style" :class="position">
             {{ text }}
         </div>
     </div>
-
 </template>
 
 <script>
@@ -32,7 +31,7 @@ export default {
         },
         overlap: {
             type: String,
-            default:'rectangle'
+            default: 'rectangle'
         }
     },
     computed: {
@@ -41,13 +40,12 @@ export default {
             obj['background-color'] = checkValidHex(this.color);
             obj['height'] = this.size + 'px';
             obj['min-width'] = this.size + 'px';
-            obj['font-size'] = this.size/1.67 + 'px';
-            obj['border-radius'] = this.size/2 + 'px';
-            obj['padding'] = this.size/4 + 'px';
-            if (this.overlap == 'circle') obj['transform'] = 'none';
+            obj['font-size'] = this.size / 1.67 + 'px';
+            obj['border-radius'] = this.size / 2 + 'px';
+            obj['padding'] = this.size / 4 + 'px';
+            if (this.overlap === 'circle') obj['transform'] = 'none';
             return obj;
         }
     }
 };
 </script>
-

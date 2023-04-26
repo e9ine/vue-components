@@ -1,8 +1,8 @@
 <template>
-    <div class="text-center" v-if="show">
-        <img :src="loaderImageUrl" :style="style">
-        <div class="text-muted" v-text="text"></div>
-        <br class="clearfix">
+    <div v-if="show" class="text-center">
+        <img :src="loaderImageUrl" :style="style" />
+        <div class="text-muted" v-text="text" />
+        <br class="clearfix" />
     </div>
 </template>
 
@@ -22,7 +22,7 @@ export default {
         },
         width: {
             type: Number
-        }, 
+        },
         loaderImageUrl: {
             type: String,
             required: true
@@ -44,8 +44,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-    img {
-        width: 200px;
-        height: 200px;
-    }
+img {
+    width: 200px;
+    height: 200px;
+}
 </style>

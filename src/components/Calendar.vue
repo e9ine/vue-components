@@ -1,8 +1,9 @@
 <template>
     <div>
         <v-date-picker
-            :mode="mode"
+            ref="picker"
             v-model="clonedValue"
+            :mode="mode"
             :is-inline="isInline"
             :is-dark="isDark"
             :color="color"
@@ -19,130 +20,125 @@
             :input-debounce="inputDebounce"
             :select-attribute="selectAttribute"
             :drag-attribute="dragAttribute"
-            @input="eventHandler('update:value',clonedValue)"
+            :input-props="inputProps"
+            @input="eventHandler('update:value', clonedValue)"
             @drag="eventHandler('drag')"
             @dayclick="handleClick"
             @update:from-page="pageChange"
-            ref="picker"
-            :input-props="inputProps"
         >
-            <slot></slot>
+            <slot />
         </v-date-picker>
     </div>
 </template>
 
 <script>
 import VDatePicker from 'v-calendar/lib/components/date-picker.umd';
-import { setupCalendar} from 'v-calendar';
+import {setupCalendar} from 'v-calendar';
 
 export default {
     name: 'Calendar',
+    components: {
+        VDatePicker
+    },
     props: {
         value: {
-            type: [String, Date,Object,Array]
+            type: [String, Date, Object, Array]
         },
-        mode:{
-            type:String,
+        mode: {
+            type: String,
             validator: (value) => {
                 return ['single', 'multiple', 'range'].indexOf(value) > -1 || !value;
             },
-            default:'single'
+            default: 'single'
         },
-        isInline:{
+        isInline: {
             type: Boolean,
-            default:false
+            default: false
         },
-        isRequired:{
+        isRequired: {
             type: Boolean,
-            default:true
+            default: true
         },
-        updateOnInput:{
+        updateOnInput: {
             type: Boolean,
-            default:true
+            default: true
         },
-        inputDebounce:{
+        inputDebounce: {
             type: Number
         },
-        inputProps:{
-            type:Object,
+        inputProps: {
+            type: Object,
             default: () => {
                 return {};
             }
         },
-        selectAttribute:{
-            type:Object,
+        selectAttribute: {
+            type: Object,
             default: () => {
                 return {};
             }
         },
-        dragAttribute:{
-            type:Object,
+        dragAttribute: {
+            type: Object,
             default: () => {
                 return {};
             }
         },
-        isDark:{
+        isDark: {
             type: Boolean,
-            default:false
+            default: false
         },
-        color:{
-            type:String
+        color: {
+            type: String
         },
-        isExpanded:{
+        isExpanded: {
             type: Boolean
         },
-        titlePosition:{
-            type:String
+        titlePosition: {
+            type: String
         },
-        rows:{
-            type:Number
+        rows: {
+            type: Number
         },
-        columns:{
-            type:Number
+        columns: {
+            type: Number
         },
-        step:{
-            type:Number
+        step: {
+            type: Number
         },
-        minDate:{
-            type:Date
+        minDate: {
+            type: Date
         },
-        maxDate:{
-            type:Date
+        maxDate: {
+            type: Date
         },
-        attributes:{
-            type:Array
+        attributes: {
+            type: Array
         }
-    },
-    components: {
-        VDatePicker
     },
     data() {
         return {
             clonedValue: this.value
         };
     },
+    created() {
+        setupCalendar();
+    },
     methods: {
         eventHandler(name, value) {
             console.log(this.$refs);
             this.$emit(name, value);
         },
-        pageChange(event){
-            let { year, month } = event;
+        pageChange(event) {
+            let {year, month} = event;
             const attrs = this.attributes.slice();
-            attrs[0].dates={ 
+            attrs[0].dates = {
                 start: new Date(year, month - 1, 1),
-                months:month
+                months: month
             };
             this.attributes = attrs;
-
-
         },
-        handleClick() { 
-        }
-    },
-    created () {
-        setupCalendar();
-    },
+        handleClick() {}
+    }
 };
 </script>
-

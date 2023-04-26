@@ -1,63 +1,66 @@
 <template>
     <div class="topbar">
-        <div class="topbar-logo" v-if="logo" :class="logo.mobile ? 'mobile-visible' : ''">
+        <div v-if="logo" class="topbar-logo" :class="logo.mobile ? 'mobile-visible' : ''">
             <img :src="logo.url" alt="" />
         </div>
-        <h3 class="topbar-page-title" v-if="pageTitle" :class="[pageTitle.mobile ? 'mobile-visible' : '', pageTitle.align ? 'align-' + pageTitle.align : '']">{{ pageTitle.text }}</h3>
+        <h3 v-if="pageTitle" class="topbar-page-title" :class="[pageTitle.mobile ? 'mobile-visible' : '', pageTitle.align ? 'align-' + pageTitle.align : '']">
+            {{ pageTitle.text }}
+        </h3>
         <div class="topbar-options">
-            <a class="search-box" :class="searchOptions.mobile ? 'mobile-visible' : ''" v-if="searchOptions">
+            <a v-if="searchOptions" class="search-box" :class="searchOptions.mobile ? 'mobile-visible' : ''">
                 <input
                     type="text"
                     :placeholder="searchOptions.placeholder"
                     :value="searchText"
-                    @input="$emit('update:search-text', $event.target.value)"
                     :readonly="searchOptions.clickAction"
+                    @input="$emit('update:search-text', $event.target.value)"
                     @click="handleAction(searchOptions.clickAction)"
                 />
             </a>
             <div v-if="topbarOptions" class="topbar-options-wrapper">
-                <div class="topbar-option" v-for="(option, key) in topbarOptions" :key="key" :class="option.mobile ? 'mobile-visible' : ''">
-                    <Tooltip :message="option.text" position="bottom" v-if="option.type == 'icon'">
+                <div v-for="(option, key) in topbarOptions" :key="key" class="topbar-option" :class="option.mobile ? 'mobile-visible' : ''">
+                    <Tooltip v-if="option.type == 'icon'" :message="option.text" position="bottom">
                         <a class="topbar-option-icon" :href="option.href" @click="handleAction(option.clickAction)">
-                            <Badge :size="12" overlap="circle" color="#FC5A5A" v-if="option.pending" position="top-right">
+                            <Badge v-if="option.pending" :size="12" overlap="circle" color="#FC5A5A" position="top-right">
                                 <i class="material-icons">{{ option.icon }}</i>
                             </Badge>
                             <i v-else class="material-icons">{{ option.icon }}</i>
                         </a>
                     </Tooltip>
                     <Button v-else size="sm" :type="option.btnClass" :text="option.text" :action="option.clickAction">
-                        <i class="material-icons" v-if="option.icon">{{ option.icon }}</i>
+                        <i v-if="option.icon" class="material-icons">{{ option.icon }}</i>
                     </Button>
                 </div>
             </div>
-            <slot></slot>
+            <slot />
         </div>
-        <AvatarInfo v-bind="allAvatarOptions" v-if="allAvatarOptions">
-            <template v-slot:avatar>
-                <Avatar
-                    :text="avatarOptions.title"
-                    :size="avatarOptions.size"
-                    :variant="avatarOptions.variant"
-                    :gravatar-email="avatarOptions.gravatarEmail"
-                    :image-url="avatarOptions.imageUrl"
-                ></Avatar>
+        <AvatarInfo v-if="allAvatarOptions" v-bind="allAvatarOptions">
+            <template #avatar>
+                <Avatar :text="avatarOptions.title" :size="avatarOptions.size" :variant="avatarOptions.variant" :gravatar-email="avatarOptions.gravatarEmail" :image-url="avatarOptions.imageUrl" />
             </template>
-            <template v-slot:avatarActions>
-                <slot name="topbarAvatarActions"></slot>
+            <template #avatarActions>
+                <slot name="topbarAvatarActions" />
             </template>
         </AvatarInfo>
     </div>
 </template>
 
 <script>
-import AvatarInfo from './AvatarInfo';
-import Avatar from './Avatar';
-import Tooltip from './Tooltip';
-import Button from './Button';
-import Badge from './Badge';
+import AvatarInfo from './AvatarInfo.vue';
+import Avatar from './Avatar.vue';
+import Tooltip from './Tooltip.vue';
+import Button from './Button.vue';
+import Badge from './Badge.vue';
 
 export default {
     name: 'TopBar',
+    components: {
+        AvatarInfo,
+        Avatar,
+        Tooltip,
+        Button,
+        Badge
+    },
     props: {
         logo: {
             type: Object
@@ -78,17 +81,21 @@ export default {
             type: String
         }
     },
-    components: {
-        AvatarInfo,
-        Avatar,
-        Tooltip,
-        Button,
-        Badge
-    },
     data() {
         return {
             allAvatarOptions: null
         };
+    },
+    beforeDestroy() {
+        window.removeEventListener('resize', this.onResize);
+    },
+    mounted() {
+        this.$nextTick(() => {
+            window.addEventListener('resize', this.onResize);
+        });
+    },
+    created() {
+        this.onResize();
     },
     methods: {
         handleAction(fn) {
@@ -118,17 +125,6 @@ export default {
                 }
             }
         }
-    },
-    beforeDestroy() {
-        window.removeEventListener('resize', this.onResize);
-    },
-    mounted() {
-        this.$nextTick(() => {
-            window.addEventListener('resize', this.onResize);
-        });
-    },
-    created() {
-        this.onResize();
     }
 };
 </script>

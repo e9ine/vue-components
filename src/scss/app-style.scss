@@ -1,7 +1,7 @@
-.spacer-v{
+.spacer-v {
     margin-bottom: 2rem;
 }
-.spacer-h{
+.spacer-h {
     margin-right: 1rem;
 }
 
@@ -12,10 +12,11 @@
 // $button-colors:map-merge($button-colors,(red:red));
 // $button-colors:("red":red);
 
-$button-colors:map-merge($button-colors,(red:red));
+$button-colors: map-merge(
+    $button-colors,
+    (
+        red: red
+    )
+);
 @import '@/scss/style';
-
-
-@import '~bootstrap-4-grid/scss/grid';
-
-
+@import '../../node_modules/bootstrap/scss/bootstrap-grid';

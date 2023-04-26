@@ -32,13 +32,14 @@
                     <i class="material-icons">open_in_new</i>
                 </Button>
                 <Overlay :show.sync="show3" :show-close="false" custom-content-class="full-loader" :opacity="0.9">
-                    <img class="spinner" src="/assets/loader.svg" />
+                    <img class="spinner" :src="loaderSVG" />
                 </Overlay>
             </div>
         </div>
     </div>
 </template>
 <script>
+import loaderSVG from '../assets/loader.svg?url';
 export default {
     name: 'OverlaysExample',
     data() {

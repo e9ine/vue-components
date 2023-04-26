@@ -1,12 +1,12 @@
 <template>
     <div class="avatar-info">
         <div class="avatar-wrapper">
-            <slot name="avatar"> </slot>
+            <slot name="avatar" />
         </div>
-        <div class="info-wrapper" v-if="title || subtitle">
+        <div v-if="title || subtitle" class="info-wrapper">
             <h4>{{ title }}</h4>
             <p>
-                <a :href="subtitleOptions.href" @click="handleAction(subtitleOptions.clickAction)" v-if="subtitleOptions.href || subtitleOptions.clickAction">
+                <a v-if="subtitleOptions.href || subtitleOptions.clickAction" :href="subtitleOptions.href" @click="handleAction(subtitleOptions.clickAction)">
                     {{ subtitle }}
                 </a>
                 <span v-else>
@@ -14,13 +14,13 @@
                 </span>
             </p>
         </div>
-        <div class="avatar-actions-wrapper" v-if="avatarActions || $slots.avatarActions" v-click-outside="hideAvatarActions">
+        <div v-if="avatarActions || $slots.avatarActions" v-click-outside="hideAvatarActions" class="avatar-actions-wrapper">
             <a class="avatar-actions-toggle" @click="toggleAvatarActions = !toggleAvatarActions">
                 <span class="material-icons">
                     arrow_drop_down
                 </span>
             </a>
-            <div class="avatar-actions-container" v-show="toggleAvatarActions">
+            <div v-show="toggleAvatarActions" class="avatar-actions-container">
                 <slot name="avatarActions">
                     <div class="avatar-actions">
                         <a v-for="(action, key) in avatarActions" :key="key" :href="action.href" @click="handleAction(action.clickAction)">
@@ -34,7 +34,7 @@
 </template>
 
 <script>
-require('../directives/v-click-outside');
+import('../directives/v-click-outside');
 export default {
     name: 'AvatarInfo',
     props: {

@@ -3,12 +3,12 @@
         <div id="mobile-menu-toggle" @click="sidebarOn = !sidebarOn">
             <i class="material-icons">menu</i>
         </div>
-        <slot name="sidebar"></slot>
-        <slot name="topbar"></slot>
+        <slot name="sidebar" />
+        <slot name="topbar" />
         <div class="content-view">
-            <slot name="breadcrumbs"></slot>
+            <slot name="breadcrumbs" />
             <div class="content-wrapper">
-                <router-view :key="routerViewKey"></router-view>
+                <router-view :key="routerViewKey" />
             </div>
         </div>
     </div>

@@ -1,10 +1,10 @@
 <template>
     <div>
         <div>
-            <Tabs :data="navigationLessTabs" :type="type" :active.sync="activeTabIndex"></Tabs>
+            <Tabs :data="navigationLessTabs" :type="type" :active.sync="activeTabIndex" />
         </div>
         <div class="tab-content">
-            <Chart v-show="activeTabIndex == 0" title="Bar Chart" type="Bar" height="500px" :data="barChartData" :allow-click="true" :show-table="true" @chartItemClicked="chartItemClicked"></Chart>
+            <Chart v-show="activeTabIndex == 0" title="Bar Chart" type="Bar" height="500px" :data="barChartData" :allow-click="true" :show-table="true" @chartItemClicked="chartItemClicked" />
             <Chart
                 v-show="activeTabIndex == 1"
                 title="Stacked Bar Chart"
@@ -15,20 +15,20 @@
                 :show-table="true"
                 :allow-click="true"
                 @chartItemClicked="chartItemClicked"
-            ></Chart>
-            <Chart v-show="activeTabIndex == 2" title="Line Chart" type="Line" :data="lineChartData" :show-table="true" :allow-click="true" @chartItemClicked="chartItemClicked"></Chart>
-            <Chart v-show="activeTabIndex == 3" title="Pie Chart" type="Pie" :data="pieChartData" :show-table="true" :allow-click="true" @chartItemClicked="chartItemClicked"></Chart>
-            <Chart v-show="activeTabIndex == 4" title="Donut Chart" type="Donut" :data="donutChartData"></Chart>
-            <Chart v-show="activeTabIndex == 5" title="Column Chart" type="Column" :data="barChartData"></Chart>
-            <Chart v-show="activeTabIndex == 6" title="Stacked Column Chart" height="400px" type="StackedColumn" :data="stackedBarChartData"></Chart>
-            <Chart v-show="activeTabIndex == 7" title="Radial Bar" height="400px" type="RadialBar" :data="radialBarChartData" :options="radialBarChartOptions"></Chart>
-            <Chart v-show="activeTabIndex == 8" title="Area Chart" height="400px" type="Area" :data="lineChartData" :colors="['#34D399']" :show-table="true"></Chart>
+            />
+            <Chart v-show="activeTabIndex == 2" title="Line Chart" type="Line" :data="lineChartData" :show-table="true" :allow-click="true" @chartItemClicked="chartItemClicked" />
+            <Chart v-show="activeTabIndex == 3" title="Pie Chart" type="Pie" :data="pieChartData" :show-table="true" :allow-click="true" @chartItemClicked="chartItemClicked" />
+            <Chart v-show="activeTabIndex == 4" title="Donut Chart" type="Donut" :data="donutChartData" />
+            <Chart v-show="activeTabIndex == 5" title="Column Chart" type="Column" :data="barChartData" />
+            <Chart v-show="activeTabIndex == 6" title="Stacked Column Chart" height="400px" type="StackedColumn" :data="stackedBarChartData" />
+            <Chart v-show="activeTabIndex == 7" title="Radial Bar" height="400px" type="RadialBar" :data="radialBarChartData" :options="radialBarChartOptions" />
+            <Chart v-show="activeTabIndex == 8" title="Area Chart" height="400px" type="Area" :data="lineChartData" :colors="['#34D399']" :show-table="true" />
         </div>
     </div>
 </template>
 <script>
 import Chart from '@/components/charts';
-import Tabs from '@/components/Tabs';
+import Tabs from '@/components/Tabs.vue';
 export default {
     name: 'ChartExample',
     components: {

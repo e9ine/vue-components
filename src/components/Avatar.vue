@@ -1,7 +1,9 @@
 <template>
     <div class="avatar" :class="variant">
         <div class="wrapper" :style="style">
-            <p :style="textStyle">{{ initials }}</p>
+            <p :style="textStyle">
+                {{ initials }}
+            </p>
         </div>
     </div>
 </template>
@@ -26,22 +28,6 @@ export default {
         },
         imageUrl: {
             type: String
-        }
-    },
-    methods: {
-        stringToHslColor(str, s, l) {
-            var hash = 0;
-            for (var i = 0; i < str.length; i++) {
-                hash = str.charCodeAt(i) + ((hash << 5) - hash);
-            }
-
-            var h = hash % 360;
-            return 'hsl(' + h + ', ' + s + '%, ' + l + '%)';
-        },
-        stringToInitials(str) {
-            var initials = str.match(/\b\w/g) || [];
-            initials = ((initials.shift() || '') + (initials.pop() || '')).toUpperCase();
-            return initials;
         }
     },
     computed: {
@@ -337,6 +323,22 @@ export default {
         },
         initials() {
             return this.stringToInitials(this.text);
+        }
+    },
+    methods: {
+        stringToHslColor(str, s, l) {
+            var hash = 0;
+            for (var i = 0; i < str.length; i++) {
+                hash = str.charCodeAt(i) + ((hash << 5) - hash);
+            }
+
+            var h = hash % 360;
+            return 'hsl(' + h + ', ' + s + '%, ' + l + '%)';
+        },
+        stringToInitials(str) {
+            var initials = str.match(/\b\w/g) || [];
+            initials = ((initials.shift() || '') + (initials.pop() || '')).toUpperCase();
+            return initials;
         }
     }
 };

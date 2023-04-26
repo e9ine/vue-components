@@ -1,9 +1,9 @@
 <template>
-    <button class="btn" type="button" :class="['btn-' + size, 'btn-' + type, customClass]" :disabled="isLoading || disabled" @click="callAction" :style="backgroundColor" ref="button">
-        <span class="icon" v-if="$slots.default && !isLoading">
-            <slot></slot>
+    <button ref="button" class="btn" type="button" :class="['btn-' + size, 'btn-' + type, customClass]" :disabled="isLoading || disabled" :style="backgroundColor" @click="callAction">
+        <span v-if="$slots.default && !isLoading" class="icon">
+            <slot />
         </span>
-        <img class="loader" v-show="isLoading" :src="loaderImageUrl" />
+        <img v-show="isLoading" class="loader" :src="loaderImageUrl" />
         <span v-show="loaderText && isLoading">{{ loaderText }}</span>
         <span v-show="!isLoading">
             {{ text }}
@@ -12,6 +12,8 @@
 </template>
 
 <script>
+import loaderSVG from '../assets/loader.svg?url';
+
 export default {
     name: 'Button',
     props: {
@@ -60,6 +62,34 @@ export default {
             actions: {}
         };
     },
+    computed: {
+        backgroundColor() {
+            if (this.color) {
+                return {
+                    'background-color': this.color
+                };
+            }
+            return {};
+        },
+        loaderImageUrl() {
+            if (this.loaderImage) {
+                return this.loaderImage;
+            }
+            return loaderSVG;
+        }
+    },
+    created() {
+        this.$set(this.actions, 'click', () => {
+            return new Promise(async (resolve, reject) => {
+                try {
+                    await this.action();
+                    resolve();
+                } catch (err) {
+                    return reject(err);
+                }
+            });
+        });
+    },
     methods: {
         async callAction() {
             if (this.isLoading) return;
@@ -78,34 +108,6 @@ export default {
                 this.action();
             }
         }
-    },
-    computed: {
-        backgroundColor() {
-            if (this.color) {
-                return {
-                    'background-color': this.color
-                };
-            }
-            return {};
-        },
-        loaderImageUrl() {
-            if (this.loaderImage) {
-                return this.loaderImage;
-            }
-            return require('@e9ine/vue_components/src/assets/loader.svg');
-        }
-    },
-    created() {
-        this.$set(this.actions, 'click', () => {
-            return new Promise(async (resolve, reject) => {
-                try {
-                    await this.action();
-                    resolve();
-                } catch (err) {
-                    return reject(err);
-                }
-            });
-        });
     }
 };
 </script>
