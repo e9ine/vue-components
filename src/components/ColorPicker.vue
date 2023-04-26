@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import Chrome from 'vue-color/src/components/Chrome';
+import Chrome from 'vue-color/src/components/Chrome.vue';
 export default {
     name: 'ColorPicker',
     components: {
