@@ -6,18 +6,18 @@
                 <p class="subtitle-s" v-text="subTitle"></p>
             </div>
             <div class="panel-options">
-                <a href="" @click.prevent="handleAction(options.download)" v-if="options.download">
+                <a href="javascript:void(0);" @click.prevent="handleAction(options.download)" v-if="options.download">
                     <span class="material-icons">get_app</span>
                 </a>
-                <a href="" @click.prevent="handleAction(options.refresh)" v-if="options.refresh">
+                <a href="javascript:void(0);" @click.prevent="handleAction(options.refresh)" v-if="options.refresh">
                     <span class="material-icons">refresh</span>
                 </a>
-                <a href="" v-if="options.info">
+                <a href="javascript:void(0);" v-if="options.info">
                     <Tooltip :message="options.info.message" :position="options.info.position">
                         <span class="material-icons">info</span>
                     </Tooltip>
                 </a>
-                <a href="" @click.prevent="toggleCollapse()" class="collapse" v-if="collapsible">
+                <a href="javascript:void(0);" @click.prevent="toggleCollapse()" class="collapse" v-if="collapsible">
                     <span class="material-icons">keyboard_arrow_up</span>
                 </a>
             </div>
